@@ -8,6 +8,8 @@ struct DashboardView: View {
     @State private var currentDate = Date()
     @State private var stockStates: [UUID: StockLoadState] = [:]
     @State private var timer: Timer?
+    @State private var refreshTask: Task<Void, Never>?
+    @State private var lastRefresh: [UUID: Date] = [:]
     
     var body: some View {
         NavigationStack {
@@ -34,10 +36,12 @@ struct DashboardView: View {
         .onAppear {
             initializeStockStates()
             startTimer()
+            startAutoRefresh()
             refreshAllStocks()
         }
         .onDisappear {
             stopTimer()
+            refreshTask?.cancel()
         }
         .onChange(of: stocks) { _, newStocks in
             let newIds = Set(newStocks.map { $0.id })
@@ -45,6 +49,8 @@ struct DashboardView: View {
             if newIds != existingIds {
                 initializeStockStates()
             }
+            refreshTask?.cancel()
+            startAutoRefresh()
         }
     }
     
@@ -101,18 +107,49 @@ struct DashboardView: View {
             if stockStates[stock.id] == nil {
                 stockStates[stock.id] = .idle
             }
+            if lastRefresh[stock.id] == nil {
+                lastRefresh[stock.id] = .distantPast
+            }
         }
     }
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            currentDate = Date()
+            self.currentDate = Date()
         }
     }
     
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    private func startAutoRefresh() {
+        refreshTask?.cancel()
+        refreshTask = Task {
+            while !Task.isCancelled {
+                let now = Date()
+                for stock in self.stocks {
+                    if stock.refreshInterval > 0 {
+                        let last = self.lastRefresh[stock.id] ?? .distantPast
+                        if now.timeIntervalSince(last) >= Double(stock.refreshInterval) {
+                            self.lastRefresh[stock.id] = now
+                            await self.refreshStock(stock)
+                        }
+                    }
+                }
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+            }
+        }
+    }
+    
+    private func refreshStock(_ stock: StockConfig) async {
+        do {
+            let data = try await StockAPIService.shared.fetchStockData(config: stock)
+            stockStates[stock.id] = .loaded(price: data.price, change: data.change)
+        } catch {
+            stockStates[stock.id] = .error(error.localizedDescription)
+        }
     }
     
     private func refreshAllStocks() {
@@ -124,6 +161,7 @@ struct DashboardView: View {
     private func refreshAllStocksAsync() async {
         for stock in stocks {
             stockStates[stock.id] = .loading
+            lastRefresh[stock.id] = Date()
         }
         
         await withTaskGroup(of: (UUID, StockLoadState).self) { group in
