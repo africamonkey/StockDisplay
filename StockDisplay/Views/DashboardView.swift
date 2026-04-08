@@ -14,18 +14,24 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                dateTimeHeader
-                    .padding()
-                
                 if stocks.isEmpty {
                     emptyState
                 } else {
                     stockList
                 }
             }
-            .navigationTitle("Stock Display")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack(spacing: 2) {
+                        Text(currentDate, format: .dateTime.weekday(.wide).month().day().year())
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        Text(currentDate, format: .dateTime.hour().minute().second())
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .monospacedDigit()
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SettingsView()) {
                         Image(systemName: "gear")
@@ -52,20 +58,6 @@ struct DashboardView: View {
             refreshTask?.cancel()
             startAutoRefresh()
         }
-    }
-    
-    private var dateTimeHeader: some View {
-        VStack(spacing: 4) {
-            Text(currentDate, format: .dateTime.weekday(.wide).month().day().year())
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Text(currentDate, format: .dateTime.hour().minute().second())
-                .font(.title)
-                .fontWeight(.bold)
-                .monospacedDigit()
-        }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.vertical, 8)
     }
     
     private var emptyState: some View {
