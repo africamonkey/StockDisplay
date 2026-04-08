@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct StockDisplayApp: App {
+    @AppStorage("selectedTheme") private var selectedTheme: String = AppTheme.system.rawValue
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             StockConfig.self,
@@ -22,10 +24,20 @@ struct StockDisplayApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    private var colorScheme: ColorScheme? {
+        guard let theme = AppTheme(rawValue: selectedTheme) else { return nil }
+        switch theme {
+        case .light: return .light
+        case .dark: return .dark
+        case .system: return nil
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(colorScheme)
         }
         .modelContainer(sharedModelContainer)
     }
