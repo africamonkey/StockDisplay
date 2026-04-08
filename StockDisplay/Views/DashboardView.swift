@@ -69,9 +69,9 @@ struct DashboardView: View {
             Text("No stocks added")
                 .font(.headline)
             HStack {
-                Text("Tap ")
+                Text("Tap")
                 Image(systemName: "gear")
-                Text(" to add stocks")
+                Text("to add stocks")
             }
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
