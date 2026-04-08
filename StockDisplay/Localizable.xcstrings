@@ -415,7 +415,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "例如: AAPL.OQ, 00700\n详情：https://xueqiu.com/S/AAPL/"
+            "value" : "例如: AAPL, 00700\n详情：https://xueqiu.com/S/AAPL/"
           }
         }
       }
