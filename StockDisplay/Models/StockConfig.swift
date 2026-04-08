@@ -10,6 +10,7 @@ final class StockConfig {
     var priceJSONPath: String
     var changeJSONPath: String
     var refreshInterval: Int
+    var sortOrder: Int
 
     init(
         id: UUID = UUID(),
@@ -18,7 +19,8 @@ final class StockConfig {
         apiURL: String,
         priceJSONPath: String,
         changeJSONPath: String,
-        refreshInterval: Int = 60
+        refreshInterval: Int = 60,
+        sortOrder: Int = 0
     ) {
         self.id = id
         self.name = name
@@ -27,5 +29,6 @@ final class StockConfig {
         self.priceJSONPath = priceJSONPath
         self.changeJSONPath = changeJSONPath
         self.refreshInterval = refreshInterval
+        self.sortOrder = sortOrder
     }
 }

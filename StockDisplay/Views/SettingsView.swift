@@ -3,7 +3,7 @@ import SwiftData
 
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var stocks: [StockConfig]
+    @Query(sort: \StockConfig.sortOrder) private var stocks: [StockConfig]
     
     var body: some View {
         List {
@@ -30,6 +30,7 @@ struct SettingsView: View {
                         }
                     }
                     .onDelete(perform: deleteStocks)
+                    .onMove(perform: moveStocks)
                 }
                 
                 NavigationLink(destination: AddEditStockView(mode: .add)) {
@@ -44,12 +45,26 @@ struct SettingsView: View {
             }
         }
         .navigationTitle(String(localized: "settings.title"))
+        .toolbar {
+            EditButton()
+        }
     }
     
     private func deleteStocks(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
                 modelContext.delete(stocks[index])
+            }
+        }
+    }
+    
+    private func moveStocks(from source: IndexSet, to destination: Int) {
+        var reorderedStocks = stocks
+        reorderedStocks.move(fromOffsets: source, toOffset: destination)
+        
+        withAnimation {
+            for (index, stock) in reorderedStocks.enumerated() {
+                stock.sortOrder = index
             }
         }
     }

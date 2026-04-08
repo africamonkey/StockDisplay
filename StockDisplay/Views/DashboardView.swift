@@ -4,7 +4,7 @@ import SwiftData
 struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.fontScale) private var fontScale
-    @Query private var stocks: [StockConfig]
+    @Query(sort: \StockConfig.sortOrder) private var stocks: [StockConfig]
     
     @State private var currentDate = Date()
     @State private var stockStates: [UUID: StockLoadState] = [:]
