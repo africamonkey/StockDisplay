@@ -3,6 +3,7 @@ import SwiftData
 
 struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.fontScale) private var fontScale
     @Query private var stocks: [StockConfig]
     
     @State private var currentDate = Date()
@@ -24,11 +25,10 @@ struct DashboardView: View {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 2) {
                         Text(currentDate, format: .dateTime.weekday(.wide).month().day().year())
-                            .font(.subheadline)
+                            .font(.system(size: 14 * fontScale))
                             .foregroundStyle(.secondary)
                         Text(currentDate, format: .dateTime.hour().minute().second())
-                            .font(.title)
-                            .fontWeight(.bold)
+                            .font(.system(size: 22 * fontScale, weight: .bold))
                             .monospacedDigit()
                     }
                 }

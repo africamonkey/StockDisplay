@@ -8,6 +8,7 @@ enum StockLoadState {
 }
 
 struct StockCardView: View {
+    @Environment(\.fontScale) private var fontScale
     let name: String
     let code: String
     let loadState: StockLoadState
@@ -16,9 +17,9 @@ struct StockCardView: View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
-                    .font(.headline)
+                    .font(.system(size: 17 * fontScale, weight: .semibold))
                 Text(code)
-                    .font(.subheadline)
+                    .font(.system(size: 15 * fontScale))
                     .foregroundStyle(.secondary)
             }
             
@@ -28,20 +29,20 @@ struct StockCardView: View {
                 switch loadState {
                 case .idle, .loading:
                     Text("Loading...")
-                        .font(.headline)
+                        .font(.system(size: 17 * fontScale, weight: .semibold))
                         .foregroundStyle(.secondary)
                 case .loaded(let price, let change):
                     Text(String(format: "$%.2f", price))
-                        .font(.headline)
+                        .font(.system(size: 17 * fontScale, weight: .semibold))
                     Text(String(format: "%+.2f%%", change))
-                        .font(.subheadline)
+                        .font(.system(size: 15 * fontScale))
                         .foregroundStyle(change >= 0 ? .green : .red)
                 case .error(let message):
                     Text("Error")
-                        .font(.headline)
+                        .font(.system(size: 17 * fontScale, weight: .semibold))
                         .foregroundStyle(.red)
                     Text(message)
-                        .font(.caption)
+                        .font(.system(size: 12 * fontScale))
                         .foregroundStyle(.secondary)
                 }
             }

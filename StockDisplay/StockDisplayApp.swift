@@ -11,6 +11,7 @@ import SwiftData
 @main
 struct StockDisplayApp: App {
     @AppStorage("selectedTheme") private var selectedTheme: String = AppTheme.system.rawValue
+    @AppStorage("selectedFontSize") private var selectedFontSize: String = FontSize.medium.rawValue
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -33,11 +34,17 @@ struct StockDisplayApp: App {
         case .system: return nil
         }
     }
+    
+    private var fontScale: CGFloat {
+        guard let size = FontSize(rawValue: selectedFontSize) else { return 1.0 }
+        return size.scaleFactor
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(colorScheme)
+                .environment(\.fontScale, fontScale)
         }
         .modelContainer(sharedModelContainer)
     }
