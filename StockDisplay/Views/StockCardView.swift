@@ -27,7 +27,7 @@ struct StockCardView: View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
-                    .font(.system(size: 17 * fontScale, weight: .semibold))
+                    .font(.system(size: 20 * fontScale, weight: .semibold))
                 Text(code)
                     .font(.system(size: 15 * fontScale))
                     .foregroundStyle(.secondary)
@@ -61,7 +61,7 @@ struct StockCardView: View {
                     .foregroundStyle(.secondary)
             case .loaded(let price, _):
                 Text(String(format: "%.2f", price))
-                    .font(.system(size: 17 * fontScale, weight: .semibold))
+                    .font(.system(size: 30 * fontScale, weight: .semibold))
             case .error:
                 Text(String(localized: "dashboard.error"))
                     .font(.system(size: 17 * fontScale, weight: .semibold))
@@ -77,7 +77,7 @@ struct StockCardView: View {
                 EmptyView()
             case .loaded(_, let change):
                 Text(String(format: "%+.2f%%", change))
-                    .font(.system(size: 15 * fontScale))
+                    .font(.system(size: 28 * fontScale))
                     .foregroundStyle(changeColor)
             case .error(let message):
                 Text(message)
