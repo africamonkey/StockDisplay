@@ -45,46 +45,44 @@ struct StockCardView: View {
     @ViewBuilder
     private var priceAndChangeView: some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Spacer()
             priceContent
-            Spacer()
+                .frame(minWidth: 150, alignment: .trailing)
             changeContent
+                .frame(minWidth: 150, alignment: .trailing)
         }
     }
     
+    @ViewBuilder
     private var priceContent: some View {
-        Group {
-            switch loadState {
-            case .idle, .loading:
-                Text(String(localized: "dashboard.loading"))
-                    .font(.system(size: 17 * fontScale, weight: .semibold))
-                    .foregroundStyle(.secondary)
-            case .loaded(let price, _):
-                Text(String(format: "%.2f", price))
-                    .font(.system(size: 30 * fontScale, weight: .semibold))
-            case .error:
-                Text(String(localized: "dashboard.error"))
-                    .font(.system(size: 17 * fontScale, weight: .semibold))
-                    .foregroundStyle(.red)
-            }
+        switch loadState {
+        case .idle, .loading:
+            Text(String(localized: "dashboard.loading"))
+                .font(.system(size: 17 * fontScale, weight: .semibold))
+                .foregroundStyle(.secondary)
+        case .loaded(let price, _):
+            Text(String(format: "%.2f", price))
+                .font(.system(size: 30 * fontScale, weight: .semibold))
+        case .error:
+            Text(String(localized: "dashboard.error"))
+                .font(.system(size: 17 * fontScale, weight: .semibold))
+                .foregroundStyle(.red)
         }
     }
     
+    @ViewBuilder
     private var changeContent: some View {
-        Group {
-            switch loadState {
-            case .idle, .loading:
-                EmptyView()
-            case .loaded(_, let change):
-                Text(String(format: "%+.2f%%", change))
-                    .font(.system(size: 28 * fontScale))
-                    .foregroundStyle(changeColor)
-            case .error(let message):
-                Text(message)
-                    .font(.system(size: 12 * fontScale))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-            }
+        switch loadState {
+        case .idle, .loading:
+            EmptyView()
+        case .loaded(_, let change):
+            Text(String(format: "%+.2f%%", change))
+                .font(.system(size: 28 * fontScale))
+                .foregroundStyle(changeColor)
+        case .error(let message):
+            Text(message)
+                .font(.system(size: 12 * fontScale))
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
         }
     }
 }
