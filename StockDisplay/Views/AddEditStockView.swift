@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 enum StockTemplate: String, CaseIterable {
-    case yahooFinance = "Yahoo Finance"
+    case tencentFinance = "Tencent"
     case custom = "Custom"
 }
 
@@ -17,15 +17,13 @@ struct AddEditStockView: View {
     
     let mode: AddEditMode
     
-    @State private var template: StockTemplate = .yahooFinance
+    @State private var template: StockTemplate = .tencentFinance
     @State private var name: String = ""
     @State private var code: String = ""
     @State private var apiURL: String = ""
     @State private var priceJSONPath: String = ""
     @State private var changeJSONPath: String = ""
     @State private var refreshInterval: Int = 60
-    
-    let refreshOptions = [0, 30, 60, 300]
     
     var body: some View {
         Form {
@@ -38,26 +36,32 @@ struct AddEditStockView: View {
                 .pickerStyle(.segmented)
             }
             
-            if template == .yahooFinance {
+            if template == .tencentFinance {
                 Section("Stock Info") {
-                    TextField("Symbol (e.g., AAPL)", text: $code)
-                        .textInputAutocapitalization(.characters)
-                    TextField("Display Name", text: $name)
+                    LabeledContent("Display Name") {
+                        TextField("", text: $name)
+                    }
+                    LabeledContent("Code") {
+                        TextField("", text: $code).autocapitalization(UITextAutocapitalizationType.none)
+                        Text("Example: usAAPL.OQ, hk00700, sh000001")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 
                 Section("API Configuration") {
                     LabeledContent("API URL") {
-                        Text("https://query1.finance.yahoo.com/v8/finance/chart/{symbol}")
+                        Text("https://web.ifzq.gtimg.cn/portable/mobile/qt/data?code={code}")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                     LabeledContent("Price Path") {
-                        Text("chart.result[0].meta.regularMarketPrice")
+                        Text("data.newpri")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                     LabeledContent("Change Path") {
-                        Text("chart.result[0].meta.regularMarketChangePercent")
+                        Text("data.zdf")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -65,7 +69,7 @@ struct AddEditStockView: View {
                 
                 Section("Refresh Interval") {
                     Picker("Refresh", selection: $refreshInterval) {
-                        Text("Manual").tag(0)
+                        Text("10 seconds").tag(10)
                         Text("30 seconds").tag(30)
                         Text("1 minute").tag(60)
                         Text("5 minutes").tag(300)
@@ -73,9 +77,12 @@ struct AddEditStockView: View {
                 }
             } else {
                 Section("Stock Info") {
-                    TextField("Display Name", text: $name)
-                    TextField("Symbol / Code", text: $code)
-                        .textInputAutocapitalization(.characters)
+                    LabeledContent("Display Name") {
+                        TextField("", text: $name)
+                    }
+                    LabeledContent("Code") {
+                        TextField("", text: $code)
+                    }
                 }
                 
                 Section("API Configuration") {
@@ -90,7 +97,7 @@ struct AddEditStockView: View {
                 
                 Section("Refresh Interval") {
                     Picker("Refresh", selection: $refreshInterval) {
-                        Text("Manual").tag(0)
+                        Text("10 seconds").tag(10)
                         Text("30 seconds").tag(30)
                         Text("1 minute").tag(60)
                         Text("5 minutes").tag(300)
@@ -116,7 +123,7 @@ struct AddEditStockView: View {
     }
     
     private var isValid: Bool {
-        if template == .yahooFinance {
+        if template == .tencentFinance {
             return !name.isEmpty && !code.isEmpty
         } else {
             return !name.isEmpty && !code.isEmpty && !apiURL.isEmpty && !priceJSONPath.isEmpty && !changeJSONPath.isEmpty
@@ -130,26 +137,37 @@ struct AddEditStockView: View {
         priceJSONPath = stock.priceJSONPath
         changeJSONPath = stock.changeJSONPath
         refreshInterval = stock.refreshInterval
-        template = stock.apiURL.contains("yahoo.com") ? .yahooFinance : .custom
+        template = stock.apiURL.contains("web.ifzq.gtimg.cn") ? .tencentFinance : .custom
     }
     
     private func saveStock() {
         let config: StockConfig
         
-        if template == .yahooFinance {
-            let url = "https://query1.finance.yahoo.com/v8/finance/chart/\(code)"
+        if template == .tencentFinance {
+            let url = "https://web.ifzq.gtimg.cn/portable/mobile/qt/data?code=\(code)"
+            if case .edit(let existing) = mode {
+                existing.name = name
+                existing.code = code
+                existing.apiURL = url
+                existing.priceJSONPath = "data.newpri"
+                existing.changeJSONPath = "data.zdf"
+                existing.refreshInterval = refreshInterval
+                dismiss()
+                return
+            }
+            
             config = StockConfig(
                 name: name,
-                code: code.uppercased(),
+                code: code,
                 apiURL: url,
-                priceJSONPath: "chart.result[0].meta.regularMarketPrice",
-                changeJSONPath: "chart.result[0].meta.regularMarketChangePercent",
+                priceJSONPath: "data.newpri",
+                changeJSONPath: "data.zdf",
                 refreshInterval: refreshInterval
             )
         } else {
             if case .edit(let existing) = mode {
                 existing.name = name
-                existing.code = code.uppercased()
+                existing.code = code
                 existing.apiURL = apiURL
                 existing.priceJSONPath = priceJSONPath
                 existing.changeJSONPath = changeJSONPath
@@ -160,7 +178,7 @@ struct AddEditStockView: View {
             
             config = StockConfig(
                 name: name,
-                code: code.uppercased(),
+                code: code,
                 apiURL: apiURL,
                 priceJSONPath: priceJSONPath,
                 changeJSONPath: changeJSONPath,
