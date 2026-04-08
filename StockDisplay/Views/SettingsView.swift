@@ -7,9 +7,9 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Section("Stock Settings") {
+            Section(String(localized: "settings.stockSettings")) {
                 if stocks.isEmpty {
-                    Text("No stocks configured")
+                    Text(String(localized: "settings.noStocksConfigured"))
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(stocks) { stock in
@@ -23,7 +23,7 @@ struct SettingsView: View {
                                         .foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                Text(stock.refreshInterval == 0 ? "Manual" : "\(stock.refreshInterval)s")
+                                Text(stock.refreshInterval == 0 ? String(localized: "stockCard.manual") : "\(stock.refreshInterval)s")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
@@ -33,20 +33,20 @@ struct SettingsView: View {
                 }
                 
                 NavigationLink(destination: AddEditStockView(mode: .add)) {
-                    Label("Add Stock", systemImage: "plus")
+                    Label(String(localized: "settings.addStock"), systemImage: "plus")
                 }
             }
             
-            Section("Other Settings") {
+            Section(String(localized: "settings.otherSettings")) {
                 NavigationLink(destination: AppearanceSettingsView()) {
-                    Label("Appearance", systemImage: "paintbrush")
+                    Label(String(localized: "settings.appearance"), systemImage: "paintbrush")
                 }
                 NavigationLink(destination: LanguageSettingsView()) {
-                    Label("Language", systemImage: "globe")
+                    Label(String(localized: "settings.language"), systemImage: "globe")
                 }
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle(String(localized: "settings.title"))
     }
     
     private func deleteStocks(offsets: IndexSet) {

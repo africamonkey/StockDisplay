@@ -28,7 +28,7 @@ struct StockCardView: View {
             VStack(alignment: .trailing, spacing: 4) {
                 switch loadState {
                 case .idle, .loading:
-                    Text("Loading...")
+                    Text(String(localized: "dashboard.loading"))
                         .font(.system(size: 17 * fontScale, weight: .semibold))
                         .foregroundStyle(.secondary)
                 case .loaded(let price, let change):
@@ -38,7 +38,7 @@ struct StockCardView: View {
                         .font(.system(size: 15 * fontScale))
                         .foregroundStyle(change >= 0 ? .green : .red)
                 case .error(let message):
-                    Text("Error")
+                    Text(String(localized: "dashboard.error"))
                         .font(.system(size: 17 * fontScale, weight: .semibold))
                         .foregroundStyle(.red)
                     Text(message)

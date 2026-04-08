@@ -2,8 +2,8 @@ import SwiftUI
 import SwiftData
 
 enum StockTemplate: String, CaseIterable {
-    case tencentFinance = "Tencent"
-    case custom = "Custom"
+    case tencentFinance
+    case custom
 }
 
 enum AddEditMode {
@@ -27,89 +27,88 @@ struct AddEditStockView: View {
     
     var body: some View {
         Form {
-            Section("Template") {
-                Picker("API Template", selection: $template) {
-                    ForEach(StockTemplate.allCases, id: \.self) { t in
-                        Text(t.rawValue).tag(t)
-                    }
+            Section(String(localized: "addEditStock.template")) {
+                Picker(String(localized: "addEditStock.apiTemplate"), selection: $template) {
+                    Text(String(localized: "addEditStock.template.tencent")).tag(StockTemplate.tencentFinance)
+                    Text(String(localized: "addEditStock.template.custom")).tag(StockTemplate.custom)
                 }
                 .pickerStyle(.segmented)
             }
             
             if template == .tencentFinance {
-                Section("Stock Info") {
-                    LabeledContent("Display Name") {
+                Section(String(localized: "addEditStock.stockInfo")) {
+                    LabeledContent(String(localized: "addEditStock.displayName")) {
                         TextField("", text: $name)
                     }
-                    LabeledContent("Code") {
+                    LabeledContent(String(localized: "addEditStock.code")) {
                         TextField("", text: $code).autocapitalization(UITextAutocapitalizationType.none)
-                        Text("Example: usAAPL.OQ, hk00700, sh000001")
+                        Text(String(localized: "addEditStock.codeExample"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
                 
-                Section("API Configuration") {
-                    LabeledContent("API URL") {
+                Section(String(localized: "addEditStock.apiConfig")) {
+                    LabeledContent(String(localized: "addEditStock.apiURL")) {
                         Text("https://web.ifzq.gtimg.cn/portable/mobile/qt/data?code={code}")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
-                    LabeledContent("Price Path") {
+                    LabeledContent(String(localized: "addEditStock.pricePath")) {
                         Text("data.newpri")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
-                    LabeledContent("Change Path") {
+                    LabeledContent(String(localized: "addEditStock.changePath")) {
                         Text("data.zdf")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
                 
-                Section("Refresh Interval") {
-                    Picker("Refresh", selection: $refreshInterval) {
-                        Text("10 seconds").tag(10)
-                        Text("30 seconds").tag(30)
-                        Text("1 minute").tag(60)
-                        Text("5 minutes").tag(300)
+                Section(String(localized: "addEditStock.refreshInterval")) {
+                    Picker(String(localized: "addEditStock.refresh"), selection: $refreshInterval) {
+                        Text(String(localized: "addEditStock.10seconds")).tag(10)
+                        Text(String(localized: "addEditStock.30seconds")).tag(30)
+                        Text(String(localized: "addEditStock.1minute")).tag(60)
+                        Text(String(localized: "addEditStock.5minutes")).tag(300)
                     }
                 }
             } else {
-                Section("Stock Info") {
-                    LabeledContent("Display Name") {
+                Section(String(localized: "addEditStock.stockInfo")) {
+                    LabeledContent(String(localized: "addEditStock.displayName")) {
                         TextField("", text: $name)
                     }
-                    LabeledContent("Code") {
+                    LabeledContent(String(localized: "addEditStock.code")) {
                         TextField("", text: $code)
                     }
                 }
                 
-                Section("API Configuration") {
-                    TextField("API URL", text: $apiURL)
+                Section(String(localized: "addEditStock.apiConfig")) {
+                    TextField(String(localized: "addEditStock.apiURL"), text: $apiURL)
                         .textInputAutocapitalization(.never)
                         .keyboardType(.URL)
-                    TextField("Price JSON Path (e.g., data.price)", text: $priceJSONPath)
+                    TextField(String(localized: "addEditStock.priceJsonPathPlaceholder"), text: $priceJSONPath)
                         .textInputAutocapitalization(.never)
-                    TextField("Change JSON Path (e.g., data.changePercent)", text: $changeJSONPath)
+                    TextField(String(localized: "addEditStock.changeJsonPathPlaceholder"), text: $changeJSONPath)
                         .textInputAutocapitalization(.never)
                 }
                 
-                Section("Refresh Interval") {
-                    Picker("Refresh", selection: $refreshInterval) {
-                        Text("10 seconds").tag(10)
-                        Text("30 seconds").tag(30)
-                        Text("1 minute").tag(60)
-                        Text("5 minutes").tag(300)
+                Section(String(localized: "addEditStock.refreshInterval")) {
+                    Picker(String(localized: "addEditStock.refresh"), selection: $refreshInterval) {
+                        Text(String(localized: "addEditStock.10seconds")).tag(10)
+                        Text(String(localized: "addEditStock.30seconds")).tag(30)
+                        Text(String(localized: "addEditStock.1minute")).tag(60)
+                        Text(String(localized: "addEditStock.5minutes")).tag(300)
                     }
                 }
             }
         }
-        .navigationTitle(mode.isAdd ? "Add Stock" : "Edit Stock")
+        .navigationTitle(mode.isAdd ? String(localized: "addEditStock.title.add") : String(localized: "addEditStock.title.edit"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Save") {
+                Button(String(localized: "addEditStock.save")) {
                     saveStock()
                 }
                 .disabled(!isValid)

@@ -66,12 +66,12 @@ struct DashboardView: View {
             Image(systemName: "chart.line.uptrend.xyaxis")
                 .font(.system(size: 60))
                 .foregroundStyle(.secondary)
-            Text("No stocks added")
+            Text(String(localized: "dashboard.noStocksAdded"))
                 .font(.headline)
             HStack {
-                Text("Tap")
+                Text(String(localized: "dashboard.tap"))
                 Image(systemName: "gear")
-                Text("to add stocks")
+                Text(String(localized: "dashboard.toAddStocks"))
             }
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
