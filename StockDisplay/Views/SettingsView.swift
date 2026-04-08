@@ -37,7 +37,7 @@ struct SettingsView: View {
                 }
             }
             
-            Section("Appearance Settings") {
+            Section("Other Settings") {
                 NavigationLink(destination: AppearanceSettingsView()) {
                     Label("Appearance", systemImage: "paintbrush")
                 }
