@@ -7,7 +7,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Section("Configured Stocks") {
+            Section("Stock Settings") {
                 if stocks.isEmpty {
                     Text("No stocks configured")
                         .foregroundStyle(.secondary)
@@ -31,16 +31,19 @@ struct SettingsView: View {
                     }
                     .onDelete(perform: deleteStocks)
                 }
-            }
-        }
-        .navigationTitle("Settings")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+                
                 NavigationLink(destination: AddEditStockView(mode: .add)) {
-                    Image(systemName: "plus")
+                    Label("Add Stock", systemImage: "plus")
+                }
+            }
+            
+            Section("Appearance Settings") {
+                NavigationLink(destination: AppearanceSettingsView()) {
+                    Label("Appearance", systemImage: "paintbrush")
                 }
             }
         }
+        .navigationTitle("Settings")
     }
     
     private func deleteStocks(offsets: IndexSet) {

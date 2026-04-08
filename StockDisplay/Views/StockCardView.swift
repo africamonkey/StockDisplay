@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 enum StockLoadState {
     case idle
@@ -48,7 +47,7 @@ struct StockCardView: View {
             }
         }
         .padding()
-        .background(Color(uiColor: UIColor.secondarySystemBackground))
+        .background(Color.gray.opacity(0.15))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
