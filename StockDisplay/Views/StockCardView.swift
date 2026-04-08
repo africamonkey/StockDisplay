@@ -9,9 +9,19 @@ enum StockLoadState {
 
 struct StockCardView: View {
     @Environment(\.fontScale) private var fontScale
+    @AppStorage("stockChangeColorMode") private var stockChangeColorMode: String = StockChangeColorMode.redUpGreenDown.rawValue
     let name: String
     let code: String
     let loadState: StockLoadState
+    
+    private var colorMode: StockChangeColorMode {
+        StockChangeColorMode(rawValue: stockChangeColorMode) ?? .redUpGreenDown
+    }
+    
+    private var changeColor: Color {
+        guard case .loaded(_, let change) = loadState else { return .secondary }
+        return change >= 0 ? colorMode.colorForChange : colorMode.colorForDecline
+    }
     
     var body: some View {
         HStack {
@@ -31,12 +41,12 @@ struct StockCardView: View {
                     Text(String(localized: "dashboard.loading"))
                         .font(.system(size: 17 * fontScale, weight: .semibold))
                         .foregroundStyle(.secondary)
-                case .loaded(let price, let change):
+                case .loaded(let price, _):
                     Text(String(format: "$%.2f", price))
                         .font(.system(size: 17 * fontScale, weight: .semibold))
-                    Text(String(format: "%+.2f%%", change))
+                    Text(String(format: "%+.2f%%", changeValue))
                         .font(.system(size: 15 * fontScale))
-                        .foregroundStyle(change >= 0 ? .green : .red)
+                        .foregroundStyle(changeColor)
                 case .error(let message):
                     Text(String(localized: "dashboard.error"))
                         .font(.system(size: 17 * fontScale, weight: .semibold))
@@ -50,5 +60,10 @@ struct StockCardView: View {
         .padding()
         .background(Color.gray.opacity(0.15))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+    
+    private var changeValue: Double {
+        guard case .loaded(_, let change) = loadState else { return 0 }
+        return change
     }
 }

@@ -1,28 +1,9 @@
 import SwiftUI
 
-enum AppTheme: String, CaseIterable {
-    case light
-    case dark
-    case system
-}
-
-enum FontSize: String, CaseIterable {
-    case small
-    case medium
-    case large
-    
-    var scaleFactor: CGFloat {
-        switch self {
-        case .small: return 0.85
-        case .medium: return 1.0
-        case .large: return 1.15
-        }
-    }
-}
-
 struct AppearanceSettingsView: View {
     @AppStorage("selectedTheme") private var selectedTheme: String = AppTheme.system.rawValue
     @AppStorage("selectedFontSize") private var selectedFontSize: String = FontSize.medium.rawValue
+    @AppStorage("stockChangeColorMode") private var stockChangeColorMode: String = StockChangeColorMode.redUpGreenDown.rawValue
     
     private func localizedThemeName(for theme: AppTheme) -> String {
         switch theme {
@@ -43,6 +24,15 @@ struct AppearanceSettingsView: View {
             return String(localized: "appearance.fontSize.medium")
         case .large:
             return String(localized: "appearance.fontSize.large")
+        }
+    }
+    
+    private func localizedColorModeName(for mode: StockChangeColorMode) -> String {
+        switch mode {
+        case .redUpGreenDown:
+            return String(localized: "appearance.colorMode.redUpGreenDown")
+        case .greenUpRedDown:
+            return String(localized: "appearance.colorMode.greenUpRedDown")
         }
     }
     
@@ -78,6 +68,23 @@ struct AppearanceSettingsView: View {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         selectedFontSize = size.rawValue
+                    }
+                }
+            }
+            
+            Section(String(localized: "appearance.colorMode")) {
+                ForEach(StockChangeColorMode.allCases, id: \.self) { mode in
+                    HStack {
+                        Text(localizedColorModeName(for: mode))
+                        Spacer()
+                        if stockChangeColorMode == mode.rawValue {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        stockChangeColorMode = mode.rawValue
                     }
                 }
             }

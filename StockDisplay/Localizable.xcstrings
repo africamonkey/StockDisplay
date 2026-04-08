@@ -372,6 +372,54 @@
         }
       }
     },
+    "appearance.colorMode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Color"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "涨跌颜色"
+          }
+        }
+      }
+    },
+    "appearance.colorMode.greenUpRedDown" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green Up, Red Down"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "绿涨红跌"
+          }
+        }
+      }
+    },
+    "appearance.colorMode.redUpGreenDown" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red Up, Green Down"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "红涨绿跌"
+          }
+        }
+      }
+    },
     "appearance.fontSize" : {
       "localizations" : {
         "en" : {
@@ -606,6 +654,7 @@
 
     },
     "language.english" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -622,6 +671,7 @@
       }
     },
     "language.simplifiedChinese" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -638,6 +688,7 @@
       }
     },
     "language.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -686,6 +737,7 @@
       }
     },
     "settings.language" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
