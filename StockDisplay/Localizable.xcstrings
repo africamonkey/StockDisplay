@@ -174,7 +174,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "例如: usAAPL.OQ, hk00700, sh000001\n详情：https://stockapp.finance.qq.com/"
           }
         }
@@ -345,7 +345,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HK stock quotes are delayed by 15 minutes"
+            "value" : "Tencent Finance API: HK stock quotes are delayed by 15 minutes"
           }
         },
         "zh-Hans" : {
