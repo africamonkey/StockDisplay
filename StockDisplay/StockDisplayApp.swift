@@ -12,7 +12,6 @@ import SwiftData
 struct StockDisplayApp: App {
     @AppStorage("selectedTheme") private var selectedTheme: String = AppTheme.system.rawValue
     @AppStorage("selectedFontSize") private var selectedFontSize: String = FontSize.medium.rawValue
-    @AppStorage("selectedLanguage") private var selectedLanguage: String = AppLanguage.english.rawValue
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -40,25 +39,12 @@ struct StockDisplayApp: App {
         guard let size = FontSize(rawValue: selectedFontSize) else { return 1.0 }
         return size.scaleFactor
     }
-    
-    private var appLocale: Locale {
-        guard let language = AppLanguage(rawValue: selectedLanguage) else {
-            return Locale(identifier: "en")
-        }
-        switch language {
-        case .simplifiedChinese:
-            return Locale(identifier: "zh-Hans")
-        case .english:
-            return Locale(identifier: "en")
-        }
-    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(colorScheme)
                 .environment(\.fontScale, fontScale)
-                .environment(\.locale, appLocale)
         }
         .modelContainer(sharedModelContainer)
     }

@@ -41,9 +41,6 @@ struct SettingsView: View {
                 NavigationLink(destination: AppearanceSettingsView()) {
                     Label(String(localized: "settings.appearance"), systemImage: "paintbrush")
                 }
-                NavigationLink(destination: LanguageSettingsView()) {
-                    Label(String(localized: "settings.language"), systemImage: "globe")
-                }
             }
         }
         .navigationTitle(String(localized: "settings.title"))
