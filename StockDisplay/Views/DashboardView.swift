@@ -24,10 +24,10 @@ struct DashboardView: View {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 2) {
                         Text(currentDate, format: .dateTime.weekday(.wide).month().day().year())
-                            .font(.caption)
+                            .font(.subheadline)
                             .foregroundStyle(.secondary)
                         Text(currentDate, format: .dateTime.hour().minute().second())
-                            .font(.title3)
+                            .font(.title)
                             .fontWeight(.bold)
                             .monospacedDigit()
                     }
