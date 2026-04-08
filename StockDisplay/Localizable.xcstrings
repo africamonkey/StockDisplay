@@ -169,13 +169,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Example: usAAPL.OQ, hk00700, sh000001"
+            "value" : "Example: usAAPL.OQ, hk00700, sh000001\nSee also: https://stockapp.finance.qq.com/"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "例如: usAAPL.OQ, hk00700, sh000001"
+            "state" : "needs_review",
+            "value" : "例如: usAAPL.OQ, hk00700, sh000001\n详情：https://stockapp.finance.qq.com/"
           }
         }
       }
@@ -335,7 +335,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "腾讯"
+            "value" : "腾讯财经"
           }
         }
       }

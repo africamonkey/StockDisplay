@@ -41,7 +41,8 @@ struct AddEditStockView: View {
                         TextField("", text: $name)
                     }
                     LabeledContent(String(localized: "addEditStock.code")) {
-                        TextField("", text: $code).autocapitalization(UITextAutocapitalizationType.none)
+                        TextField("", text: $code)
+                            .textInputAutocapitalization(.never)
                         Text(String(localized: "addEditStock.codeExample"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -81,17 +82,24 @@ struct AddEditStockView: View {
                     }
                     LabeledContent(String(localized: "addEditStock.code")) {
                         TextField("", text: $code)
+                            .textInputAutocapitalization(.never)
                     }
                 }
                 
                 Section(String(localized: "addEditStock.apiConfig")) {
-                    TextField(String(localized: "addEditStock.apiURL"), text: $apiURL)
-                        .textInputAutocapitalization(.never)
-                        .keyboardType(.URL)
-                    TextField(String(localized: "addEditStock.priceJsonPathPlaceholder"), text: $priceJSONPath)
-                        .textInputAutocapitalization(.never)
-                    TextField(String(localized: "addEditStock.changeJsonPathPlaceholder"), text: $changeJSONPath)
-                        .textInputAutocapitalization(.never)
+                    LabeledContent(String(localized: "addEditStock.apiURL")) {
+                        TextField(String(localized: "addEditStock.apiURL"), text: $apiURL)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(.URL)
+                    }
+                    LabeledContent(String(localized: "addEditStock.pricePath")) {
+                        TextField(String(localized: "addEditStock.priceJsonPathPlaceholder"), text: $priceJSONPath)
+                            .textInputAutocapitalization(.never)
+                    }
+                    LabeledContent(String(localized: "addEditStock.changePath")) {
+                        TextField(String(localized: "addEditStock.changeJsonPathPlaceholder"), text: $changeJSONPath)
+                            .textInputAutocapitalization(.never)
+                    }
                 }
                 
                 Section(String(localized: "addEditStock.refreshInterval")) {
