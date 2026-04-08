@@ -164,22 +164,6 @@
         }
       }
     },
-    "addEditStock.codeExample" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Example: usAAPL.OQ, hk00700, sh000001\nSee also: https://stockapp.finance.qq.com/"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "例如: usAAPL.OQ, hk00700, sh000001\n详情：https://stockapp.finance.qq.com/"
-          }
-        }
-      }
-    },
     "addEditStock.displayName" : {
       "localizations" : {
         "en" : {
@@ -340,6 +324,38 @@
         }
       }
     },
+    "addEditStock.template.xueqiu" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xueqiu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雪球"
+          }
+        }
+      }
+    },
+    "addEditStock.tencentCodeExample" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Example: usAAPL.OQ, hk00700, sh000001\nSee also: https://stockapp.finance.qq.com/"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如: usAAPL.OQ, hk00700, sh000001\n详情：https://stockapp.finance.qq.com/"
+          }
+        }
+      }
+    },
     "addEditStock.tencentHongKongDelay" : {
       "localizations" : {
         "en" : {
@@ -384,6 +400,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑股票"
+          }
+        }
+      }
+    },
+    "addEditStock.xueqiuCodeExample" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Example: AAPL, 00700\nSee also: https://xueqiu.com/S/AAPL/"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如: AAPL.OQ, 00700\n详情：https://xueqiu.com/S/AAPL/"
           }
         }
       }
@@ -664,6 +696,15 @@
 
     },
     "data.zdf" : {
+
+    },
+    "data[0].current" : {
+
+    },
+    "data[0].percent" : {
+
+    },
+    "https://stock.xueqiu.com/v5/stock/realtime/quotec.json?symbol={code}" : {
 
     },
     "https://web.ifzq.gtimg.cn/portable/mobile/qt/data?code={code}" : {

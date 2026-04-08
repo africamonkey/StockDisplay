@@ -3,6 +3,7 @@ import SwiftData
 
 enum StockTemplate: String, CaseIterable {
     case tencentFinance
+    case xueqiu
     case custom
 }
 
@@ -30,6 +31,7 @@ struct AddEditStockView: View {
             Section(String(localized: "addEditStock.template")) {
                 Picker(String(localized: "addEditStock.apiTemplate"), selection: $template) {
                     Text(String(localized: "addEditStock.template.tencent")).tag(StockTemplate.tencentFinance)
+                    Text(String(localized: "addEditStock.template.xueqiu")).tag(StockTemplate.xueqiu)
                     Text(String(localized: "addEditStock.template.custom")).tag(StockTemplate.custom)
                 }
                 .pickerStyle(.segmented)
@@ -53,7 +55,7 @@ struct AddEditStockView: View {
                     LabeledContent(String(localized: "addEditStock.code")) {
                         TextField("", text: $code)
                             .textInputAutocapitalization(.never)
-                        Text(String(localized: "addEditStock.codeExample"))
+                        Text(String(localized: "addEditStock.tencentCodeExample"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -72,6 +74,46 @@ struct AddEditStockView: View {
                     }
                     LabeledContent(String(localized: "addEditStock.changePath")) {
                         Text("data.zdf")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                
+                Section(String(localized: "addEditStock.refreshInterval")) {
+                    Picker(String(localized: "addEditStock.refresh"), selection: $refreshInterval) {
+                        Text(String(localized: "addEditStock.10seconds")).tag(10)
+                        Text(String(localized: "addEditStock.30seconds")).tag(30)
+                        Text(String(localized: "addEditStock.1minute")).tag(60)
+                        Text(String(localized: "addEditStock.5minutes")).tag(300)
+                    }
+                }
+            } else if template == .xueqiu {
+                Section(String(localized: "addEditStock.stockInfo")) {
+                    LabeledContent(String(localized: "addEditStock.displayName")) {
+                        TextField("", text: $name)
+                    }
+                    LabeledContent(String(localized: "addEditStock.code")) {
+                        TextField("", text: $code)
+                            .textInputAutocapitalization(.never)
+                        Text(String(localized: "addEditStock.xueqiuCodeExample"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                
+                Section(String(localized: "addEditStock.apiConfig")) {
+                    LabeledContent(String(localized: "addEditStock.apiURL")) {
+                        Text("https://stock.xueqiu.com/v5/stock/realtime/quotec.json?symbol={code}")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    LabeledContent(String(localized: "addEditStock.pricePath")) {
+                        Text("data[0].current")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    LabeledContent(String(localized: "addEditStock.changePath")) {
+                        Text("data[0].percent")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -140,7 +182,7 @@ struct AddEditStockView: View {
     }
     
     private var isValid: Bool {
-        if template == .tencentFinance {
+        if template == .tencentFinance || template == .xueqiu {
             return !name.isEmpty && !code.isEmpty
         } else {
             return !name.isEmpty && !code.isEmpty && !apiURL.isEmpty && !priceJSONPath.isEmpty && !changeJSONPath.isEmpty
@@ -154,7 +196,13 @@ struct AddEditStockView: View {
         priceJSONPath = stock.priceJSONPath
         changeJSONPath = stock.changeJSONPath
         refreshInterval = stock.refreshInterval
-        template = stock.apiURL.contains("web.ifzq.gtimg.cn") ? .tencentFinance : .custom
+        if stock.apiURL.contains("web.ifzq.gtimg.cn") {
+            template = .tencentFinance
+        } else if stock.apiURL.contains("stock.xueqiu.com") {
+            template = .xueqiu
+        } else {
+            template = .custom
+        }
     }
     
     private func saveStock() {
@@ -179,6 +227,27 @@ struct AddEditStockView: View {
                 apiURL: url,
                 priceJSONPath: "data.newpri",
                 changeJSONPath: "data.zdf",
+                refreshInterval: refreshInterval
+            )
+        } else if template == .xueqiu {
+            let url = "https://stock.xueqiu.com/v5/stock/realtime/quotec.json?symbol=\(code)"
+            if case .edit(let existing) = mode {
+                existing.name = name
+                existing.code = code
+                existing.apiURL = url
+                existing.priceJSONPath = "data[0].current"
+                existing.changeJSONPath = "data[0].percent"
+                existing.refreshInterval = refreshInterval
+                dismiss()
+                return
+            }
+            
+            config = StockConfig(
+                name: name,
+                code: code,
+                apiURL: url,
+                priceJSONPath: "data[0].current",
+                changeJSONPath: "data[0].percent",
                 refreshInterval: refreshInterval
             )
         } else {
