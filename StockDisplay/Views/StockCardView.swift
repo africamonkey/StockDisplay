@@ -42,7 +42,7 @@ struct StockCardView: View {
                         .font(.system(size: 17 * fontScale, weight: .semibold))
                         .foregroundStyle(.secondary)
                 case .loaded(let price, _):
-                    Text(String(format: "$%.2f", price))
+                    Text(String(format: "%.2f", price))
                         .font(.system(size: 17 * fontScale, weight: .semibold))
                     Text(String(format: "%+.2f%%", changeValue))
                         .font(.system(size: 15 * fontScale))

@@ -3,6 +3,7 @@ import SwiftData
 
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.editMode) private var editMode
     @Query(sort: \StockConfig.sortOrder) private var stocks: [StockConfig]
     
     var body: some View {
@@ -46,7 +47,13 @@ struct SettingsView: View {
         }
         .navigationTitle(String(localized: "settings.title"))
         .toolbar {
-            EditButton()
+            Button {
+                withAnimation {
+                    editMode?.wrappedValue = editMode?.wrappedValue == .active ? .inactive : .active
+                }
+            } label: {
+                Text(editMode?.wrappedValue == .active ? String(localized: "settings.done") : String(localized: "settings.edit"))
+            }
         }
     }
     
