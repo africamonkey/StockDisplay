@@ -36,6 +36,16 @@ struct AddEditStockView: View {
             }
             
             if template == .tencentFinance {
+                Section {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundStyle(.orange)
+                        Text(String(localized: "addEditStock.tencentHongKongDelay"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                
                 Section(String(localized: "addEditStock.stockInfo")) {
                     LabeledContent(String(localized: "addEditStock.displayName")) {
                         TextField("", text: $name)

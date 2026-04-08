@@ -340,6 +340,22 @@
         }
       }
     },
+    "addEditStock.tencentHongKongDelay" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HK stock quotes are delayed by 15 minutes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "腾讯财经API：港股行情延时15分钟"
+          }
+        }
+      }
+    },
     "addEditStock.title.add" : {
       "localizations" : {
         "en" : {
