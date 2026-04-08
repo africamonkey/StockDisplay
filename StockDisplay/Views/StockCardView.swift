@@ -35,35 +35,56 @@ struct StockCardView: View {
             
             Spacer()
             
-            VStack(alignment: .trailing, spacing: 4) {
-                switch loadState {
-                case .idle, .loading:
-                    Text(String(localized: "dashboard.loading"))
-                        .font(.system(size: 17 * fontScale, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                case .loaded(let price, _):
-                    Text(String(format: "%.2f", price))
-                        .font(.system(size: 17 * fontScale, weight: .semibold))
-                    Text(String(format: "%+.2f%%", changeValue))
-                        .font(.system(size: 15 * fontScale))
-                        .foregroundStyle(changeColor)
-                case .error(let message):
-                    Text(String(localized: "dashboard.error"))
-                        .font(.system(size: 17 * fontScale, weight: .semibold))
-                        .foregroundStyle(.red)
-                    Text(message)
-                        .font(.system(size: 12 * fontScale))
-                        .foregroundStyle(.secondary)
-                }
-            }
+            priceAndChangeView
         }
         .padding()
         .background(Color.gray.opacity(0.15))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
     
-    private var changeValue: Double {
-        guard case .loaded(_, let change) = loadState else { return 0 }
-        return change
+    @ViewBuilder
+    private var priceAndChangeView: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Spacer()
+            priceContent
+            Spacer()
+            changeContent
+        }
+    }
+    
+    private var priceContent: some View {
+        Group {
+            switch loadState {
+            case .idle, .loading:
+                Text(String(localized: "dashboard.loading"))
+                    .font(.system(size: 17 * fontScale, weight: .semibold))
+                    .foregroundStyle(.secondary)
+            case .loaded(let price, _):
+                Text(String(format: "%.2f", price))
+                    .font(.system(size: 17 * fontScale, weight: .semibold))
+            case .error:
+                Text(String(localized: "dashboard.error"))
+                    .font(.system(size: 17 * fontScale, weight: .semibold))
+                    .foregroundStyle(.red)
+            }
+        }
+    }
+    
+    private var changeContent: some View {
+        Group {
+            switch loadState {
+            case .idle, .loading:
+                EmptyView()
+            case .loaded(_, let change):
+                Text(String(format: "%+.2f%%", change))
+                    .font(.system(size: 15 * fontScale))
+                    .foregroundStyle(changeColor)
+            case .error(let message):
+                Text(message)
+                    .font(.system(size: 12 * fontScale))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+        }
     }
 }

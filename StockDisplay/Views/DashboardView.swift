@@ -1,6 +1,12 @@
 import SwiftUI
 import SwiftData
 
+enum AppNavigationDestination: Hashable {
+    case settings
+    case addStock
+    case editStock(StockConfig)
+}
+
 struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.fontScale) private var fontScale
@@ -11,9 +17,10 @@ struct DashboardView: View {
     @State private var timer: Timer?
     @State private var refreshTask: Task<Void, Never>?
     @State private var lastRefresh: [UUID: Date] = [:]
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 if stocks.isEmpty {
                     emptyState
@@ -33,9 +40,21 @@ struct DashboardView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: SettingsView()) {
+                    Button {
+                        navigationPath.append(AppNavigationDestination.settings)
+                    } label: {
                         Image(systemName: "gear")
                     }
+                }
+            }
+            .navigationDestination(for: AppNavigationDestination.self) { destination in
+                switch destination {
+                case .settings:
+                    SettingsView(navigationPath: $navigationPath)
+                case .addStock:
+                    AddEditStockView(mode: .add)
+                case .editStock(let stock):
+                    AddEditStockView(mode: .edit(stock))
                 }
             }
         }
@@ -81,21 +100,31 @@ struct DashboardView: View {
     }
     
     private var stockList: some View {
-        ScrollView {
-            LazyVStack(spacing: 6) {
-                ForEach(stocks) { stock in
-                    StockCardView(
-                        name: stock.name,
-                        code: stock.code,
-                        loadState: stockStates[stock.id] ?? .idle
-                    )
+        GeometryReader { geometry in
+            ScrollView {
+                LazyVStack(spacing: 6) {
+                    ForEach(stocks) { stock in
+                        StockCardView(
+                            name: stock.name,
+                            code: stock.code,
+                            loadState: stockStates[stock.id] ?? .idle
+                        )
+                    }
                 }
+                .padding(.horizontal, horizontalPadding(in: geometry.size.width))
             }
-            .padding(.horizontal)
+            .refreshable {
+                await refreshAllStocksAsync()
+            }
         }
-        .refreshable {
-            await refreshAllStocksAsync()
+    }
+    
+    private func horizontalPadding(in width: CGFloat) -> CGFloat {
+        let maxWidth: CGFloat = 600
+        if width > maxWidth {
+            return (width - maxWidth) / 2 + 16
         }
+        return 16
     }
     
     private func initializeStockStates() {
