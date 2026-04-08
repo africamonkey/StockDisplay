@@ -78,7 +78,7 @@ struct DashboardView: View {
     
     private var stockList: some View {
         ScrollView {
-            LazyVStack(spacing: 8) {
+            LazyVStack(spacing: 0) {
                 ForEach(stocks) { stock in
                     StockCardView(
                         name: stock.name,
