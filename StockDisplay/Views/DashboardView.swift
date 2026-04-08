@@ -78,7 +78,7 @@ struct DashboardView: View {
     
     private var stockList: some View {
         ScrollView {
-            LazyVStack(spacing: 12) {
+            LazyVStack(spacing: 8) {
                 ForEach(stocks) { stock in
                     StockCardView(
                         name: stock.name,
@@ -87,7 +87,7 @@ struct DashboardView: View {
                     )
                 }
             }
-            .padding()
+            .padding(.horizontal)
         }
         .refreshable {
             await refreshAllStocksAsync()
