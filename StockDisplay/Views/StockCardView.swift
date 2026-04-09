@@ -27,7 +27,7 @@ struct StockCardView: View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
-                    .font(.system(size: 20 * fontScale, weight: .semibold))
+                    .font(.system(size: 20 * fontScale, weight: .bold))
                 Text(code)
                     .font(.system(size: 15 * fontScale))
                     .foregroundStyle(.secondary)
@@ -57,14 +57,14 @@ struct StockCardView: View {
         switch loadState {
         case .idle, .loading:
             Text(String(localized: "dashboard.loading"))
-                .font(.system(size: 17 * fontScale, weight: .semibold))
+                .font(.system(size: 17 * fontScale, weight: .bold))
                 .foregroundStyle(.secondary)
         case .loaded(let price, _):
             Text(String(format: "%.2f", price))
-                .font(.system(size: 30 * fontScale, weight: .semibold).monospacedDigit())
+                .font(.system(size: 30 * fontScale, weight: .bold).monospacedDigit())
         case .error:
             Text(String(localized: "dashboard.error"))
-                .font(.system(size: 17 * fontScale, weight: .semibold))
+                .font(.system(size: 17 * fontScale, weight: .bold))
                 .foregroundStyle(.red)
         }
     }
@@ -76,11 +76,11 @@ struct StockCardView: View {
             EmptyView()
         case .loaded(_, let change):
             Text(String(format: "%+.2f%%", change))
-                .font(.system(size: 28 * fontScale).monospacedDigit())
+                .font(.system(size: 28 * fontScale, weight: .semibold).monospacedDigit())
                 .foregroundStyle(changeColor)
         case .error(let message):
             Text(message)
-                .font(.system(size: 12 * fontScale))
+                .font(.system(size: 12 * fontScale, weight: .semibold))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
         }
