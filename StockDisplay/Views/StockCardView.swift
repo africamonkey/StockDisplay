@@ -46,9 +46,9 @@ struct StockCardView: View {
     private var priceAndChangeView: some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
             priceContent
-                .frame(minWidth: 150, alignment: .trailing)
+                .frame(minWidth: 150 * fontScale, alignment: .trailing)
             changeContent
-                .frame(minWidth: 150, alignment: .trailing)
+                .frame(minWidth: 150 * fontScale, alignment: .trailing)
         }
     }
     

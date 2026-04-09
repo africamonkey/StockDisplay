@@ -4,6 +4,7 @@ struct AppearanceSettingsView: View {
     @AppStorage("selectedTheme") private var selectedTheme: String = AppTheme.system.rawValue
     @AppStorage("selectedFontSize") private var selectedFontSize: String = FontSize.medium.rawValue
     @AppStorage("stockChangeColorMode") private var stockChangeColorMode: String = StockChangeColorMode.redUpGreenDown.rawValue
+    @AppStorage("stockListTwoColumns") private var stockListTwoColumns: Bool = false
     
     private func localizedThemeName(for theme: AppTheme) -> String {
         switch theme {
@@ -87,6 +88,10 @@ struct AppearanceSettingsView: View {
                         stockChangeColorMode = mode.rawValue
                     }
                 }
+            }
+            
+            Section(String(localized: "appearance.layout")) {
+                Toggle(String(localized: "appearance.twoColumns"), isOn: $stockListTwoColumns)
             }
         }
         .navigationTitle(String(localized: "appearance.title"))

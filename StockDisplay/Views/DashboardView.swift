@@ -11,6 +11,7 @@ struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.fontScale) private var fontScale
     @Query(sort: \StockConfig.sortOrder) private var stocks: [StockConfig]
+    @AppStorage("stockListTwoColumns") private var stockListTwoColumns: Bool = false
     
     @State private var currentDate = Date()
     @State private var stockStates: [UUID: StockLoadState] = [:]
@@ -102,21 +103,44 @@ struct DashboardView: View {
     private var stockList: some View {
         GeometryReader { geometry in
             ScrollView {
-                LazyVStack(spacing: 6) {
-                    ForEach(stocks) { stock in
-                        StockCardView(
-                            name: stock.name,
-                            code: stock.code,
-                            loadState: stockStates[stock.id] ?? .idle
-                        )
-                    }
+                if stockListTwoColumns {
+                    twoColumnGrid(geometry: geometry)
+                } else {
+                    singleColumnList(geometry: geometry)
                 }
-                .padding(.horizontal, horizontalPadding(in: geometry.size.width))
             }
             .refreshable {
                 await refreshAllStocksAsync()
             }
         }
+    }
+    
+    private func singleColumnList(geometry: GeometryProxy) -> some View {
+        LazyVStack(spacing: 6) {
+            ForEach(stocks) { stock in
+                StockCardView(
+                    name: stock.name,
+                    code: stock.code,
+                    loadState: stockStates[stock.id] ?? .idle
+                )
+            }
+        }
+        .padding(.horizontal, horizontalPadding(in: geometry.size.width))
+    }
+    
+    private func twoColumnGrid(geometry: GeometryProxy) -> some View {
+        let horizontalPadding: CGFloat = 16
+        let columnWidth = (geometry.size.width - horizontalPadding * 2 - 6) / 2
+        return LazyVGrid(columns: [GridItem(.fixed(columnWidth)), GridItem(.fixed(columnWidth))], spacing: 6) {
+            ForEach(stocks) { stock in
+                StockCardView(
+                    name: stock.name,
+                    code: stock.code,
+                    loadState: stockStates[stock.id] ?? .idle
+                )
+            }
+        }
+        .padding(.horizontal, horizontalPadding)
     }
     
     private func horizontalPadding(in width: CGFloat) -> CGFloat {
