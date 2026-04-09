@@ -6,6 +6,7 @@ struct SettingsView: View {
     @Environment(\.editMode) private var editMode
     @Query(sort: \StockConfig.sortOrder) private var stocks: [StockConfig]
     @Binding var navigationPath: NavigationPath
+    @AppStorage("keepScreenOn") private var keepScreenOn: Bool = false
     
     var body: some View {
         List {
@@ -47,6 +48,7 @@ struct SettingsView: View {
             }
             
             Section(String(localized: "settings.otherSettings")) {
+                Toggle(String(localized: "settings.keepScreenOn"), systemImage: "display", isOn: $keepScreenOn)
                 NavigationLink(destination: AppearanceSettingsView()) {
                     Label(String(localized: "settings.appearance"), systemImage: "paintbrush")
                 }

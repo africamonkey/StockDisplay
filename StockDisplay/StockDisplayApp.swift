@@ -7,11 +7,15 @@
 
 import SwiftUI
 import SwiftData
+#if canImport(UIKit)
+import UIKit
+#endif
 
 @main
 struct StockDisplayApp: App {
     @AppStorage("selectedTheme") private var selectedTheme: String = AppTheme.system.rawValue
     @AppStorage("selectedFontSize") private var selectedFontSize: String = FontSize.medium.rawValue
+    @AppStorage("keepScreenOn") private var keepScreenOn: Bool = false
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
