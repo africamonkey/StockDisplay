@@ -7,15 +7,19 @@ enum AppTheme: String, CaseIterable {
 }
 
 enum FontSize: String, CaseIterable {
+    case verySmall = "very_small"
     case small
     case medium
     case large
+    case veryLarge = "very_large"
     
     var scaleFactor: CGFloat {
         switch self {
+        case .verySmall: return 0.7
         case .small: return 0.85
         case .medium: return 1.0
         case .large: return 1.15
+        case .veryLarge: return 1.3
         }
     }
 }

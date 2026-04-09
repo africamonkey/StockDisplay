@@ -19,12 +19,16 @@ struct AppearanceSettingsView: View {
     
     private func localizedFontSizeName(for size: FontSize) -> String {
         switch size {
+        case .verySmall:
+            return String(localized: "appearance.fontSize.verySmall")
         case .small:
             return String(localized: "appearance.fontSize.small")
         case .medium:
             return String(localized: "appearance.fontSize.medium")
         case .large:
             return String(localized: "appearance.fontSize.large")
+        case .veryLarge:
+            return String(localized: "appearance.fontSize.veryLarge")
         }
     }
     

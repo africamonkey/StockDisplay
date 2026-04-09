@@ -532,6 +532,38 @@
         }
       }
     },
+    "appearance.fontSize.verySmall" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Small"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "极小"
+          }
+        }
+      }
+    },
+    "appearance.fontSize.veryLarge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Large"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "极大"
+          }
+        }
+      }
+    },
     "appearance.theme" : {
       "localizations" : {
         "en" : {
