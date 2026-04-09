@@ -61,7 +61,7 @@ struct StockCardView: View {
                 .foregroundStyle(.secondary)
         case .loaded(let price, _):
             Text(String(format: "%.2f", price))
-                .font(.system(size: 30 * fontScale, weight: .semibold))
+                .font(.system(size: 30 * fontScale, weight: .semibold).monospacedDigit())
         case .error:
             Text(String(localized: "dashboard.error"))
                 .font(.system(size: 17 * fontScale, weight: .semibold))
@@ -76,7 +76,7 @@ struct StockCardView: View {
             EmptyView()
         case .loaded(_, let change):
             Text(String(format: "%+.2f%%", change))
-                .font(.system(size: 28 * fontScale))
+                .font(.system(size: 28 * fontScale).monospacedDigit())
                 .foregroundStyle(changeColor)
         case .error(let message):
             Text(message)
