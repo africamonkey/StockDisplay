@@ -29,6 +29,28 @@ struct DataSourceConfigData: Codable {
     let sortOrder: Int
 }
 
+enum ImportError: LocalizedError {
+    case invalidVersion
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidVersion:
+            return "Invalid or missing version in config file"
+        }
+    }
+}
+
+enum ExportError: LocalizedError {
+    case encodingFailed
+    
+    var errorDescription: String? {
+        switch self {
+        case .encodingFailed:
+            return "Failed to encode configuration data"
+        }
+    }
+}
+
 #if canImport(UIKit)
 struct DocumentPicker: UIViewControllerRepresentable {
     let types: [UTType]
@@ -212,7 +234,7 @@ struct ConfigFileSettingsView: View {
         Task {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
-                try await processImportData(data)
+                try processImportData(data)
                 await MainActor.run {
                     isImporting = false
                     showAlert(
@@ -252,7 +274,7 @@ struct ConfigFileSettingsView: View {
         
         Task {
             do {
-                try await processImportData(data)
+                try processImportData(data)
                 await MainActor.run {
                     showAlert(
                         title: String(localized: "configFile.importSuccess"),
@@ -284,12 +306,21 @@ struct ConfigFileSettingsView: View {
         do {
             let data = try Data(contentsOf: url)
             Task {
-                try await processImportData(data)
-                await MainActor.run {
-                    showAlert(
-                        title: String(localized: "configFile.importSuccess"),
-                        message: ""
-                    )
+                do {
+                    try processImportData(data)
+                    await MainActor.run {
+                        showAlert(
+                            title: String(localized: "configFile.importSuccess"),
+                            message: ""
+                        )
+                    }
+                } catch {
+                    await MainActor.run {
+                        showAlert(
+                            title: String(localized: "configFile.importError"),
+                            message: error.localizedDescription
+                        )
+                    }
                 }
             }
         } catch {
@@ -300,8 +331,12 @@ struct ConfigFileSettingsView: View {
         }
     }
     
-    private func processImportData(_ data: Data) async throws {
+    private func processImportData(_ data: Data) throws {
         let configData = try JSONDecoder().decode(ConfigFileData.self, from: data)
+        
+        guard configData.version > 0 else {
+            throw ImportError.invalidVersion
+        }
         
         var dataSourceIdMapping: [UUID: UUID] = [:]
         let maxDataSourceSortOrder = dataSources.map(\.sortOrder).max() ?? -1
@@ -380,12 +415,19 @@ struct ConfigFileSettingsView: View {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         
-        if let data = try? encoder.encode(configFileData),
-           let jsonString = String(data: data, encoding: .utf8) {
+        do {
+            let data = try encoder.encode(configFileData)
+            guard let jsonString = String(data: data, encoding: .utf8) else {
+                throw ExportError.encodingFailed
+            }
             return jsonString
+        } catch {
+            showAlert(
+                title: String(localized: "configFile.exportError"),
+                message: error.localizedDescription
+            )
+            return "{}"
         }
-        
-        return "{}"
     }
     
     private func showAlert(title: String, message: String) {
