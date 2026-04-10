@@ -79,6 +79,15 @@ Export your stock configuration to share or backup:
 | **Keep Screen On** | Prevent screen dimming |
 | **Data Sources** | Manage API configurations |
 | **Stocks** | View, edit, delete stocks |
+| **About** | GitHub repo, Donation, App info |
+
+## About
+
+| Item | Description |
+|------|-------------|
+| GitHub | [africamonkey/StockDisplay](https://github.com/africamonkey/StockDisplay) |
+| Donate | Support development via in-app purchase (1元、10元、30元、100元) |
+| Version | Displayed in Settings → About |
 
 ## Architecture
 
@@ -102,12 +111,15 @@ StockDisplay/
 │   ├── AddEditStockView.swift # Add/edit stock form
 │   ├── AppearanceSettingsView.swift
 │   ├── ConfigFileSettingsView.swift
-│   └── DataSourceEditorView.swift
+│   ├── DataSourceEditorView.swift
+│   ├── AboutView.swift           # About screen
+│   └── DonationView.swift        # Donation sheet
 ├── Models/
 │   ├── StockConfig.swift      # Stock data model
 │   └── DataSourceConfig.swift # API configuration model
 ├── Services/
-│   └── StockAPIService.swift  # API fetching logic
+│   ├── StockAPIService.swift  # API fetching logic
+│   └── DonationManager.swift   # StoreKit donation handling
 └── Utils/
     ├── JSONPath.swift         # JSON path extraction
     ├── LocaleManager.swift    # Localization
