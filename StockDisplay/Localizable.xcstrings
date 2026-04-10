@@ -915,6 +915,7 @@
       }
     },
     "configFile.importFromClipboard" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -926,22 +927,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "从剪贴板导入"
-          }
-        }
-      }
-    },
-    "configFile.importFromTextbox" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Import from Textbox"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "从文本框导入"
           }
         }
       }
@@ -958,6 +943,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "从文件中导入"
+          }
+        }
+      }
+    },
+    "configFile.importFromTextbox" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import from Textbox"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从文本框导入"
           }
         }
       }
@@ -1621,7 +1622,7 @@
     "从URL下载" : {
 
     },
-    "从剪贴板导入" : {
+    "从文本框导入" : {
 
     },
     "取消" : {
