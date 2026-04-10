@@ -219,18 +219,6 @@ struct ConfigFileSettingsView: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
         }
-        .alert("从剪贴板导入", isPresented: $showingClipboardImportAlert) {
-            Button("取消", role: .cancel) {
-                clipboardImportText = ""
-            }
-            Button("导入", role: .none) {
-                importFromClipboardText()
-            }
-        } message: {
-            TextEditor(text: $clipboardImportText)
-                .frame(minHeight: 150)
-                .font(.body)
-        }
         #if canImport(UIKit)
         .sheet(isPresented: $showingDocumentPicker) {
             DocumentPicker(types: [.json]) { url in
@@ -250,6 +238,42 @@ struct ConfigFileSettingsView: View {
                 }
                 isExporting = false
             }
+        }
+        .sheet(isPresented: $showingClipboardImportAlert) {
+            NavigationStack {
+                VStack(spacing: 16) {
+                    TextEditor(text: $clipboardImportText)
+                        .frame(minHeight: 200)
+                        .font(.body)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
+                        .padding(.horizontal)
+                    
+                    HStack {
+                        Button("取消") {
+                            clipboardImportText = ""
+                            showingClipboardImportAlert = false
+                        }
+                        .buttonStyle(.bordered)
+                        
+                        Spacer()
+                        
+                        Button("导入") {
+                            showingClipboardImportAlert = false
+                            importFromClipboardText()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(clipboardImportText.isEmpty)
+                    }
+                    .padding(.horizontal)
+                }
+                .padding(.top)
+                .navigationTitle("从剪贴板导入")
+                .navigationBarTitleDisplayMode(.inline)
+            }
+            .presentationDetents([.medium, .large])
         }
         #endif
     }
