@@ -57,7 +57,8 @@ struct DonationView: View {
             }
             .onChange(of: donationManager.purchaseState) { _, newValue in
                 if case .success = newValue {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    Task {
+                        try? await Task.sleep(nanoseconds: 1_500_000_000)
                         donationManager.resetState()
                     }
                 }
@@ -74,23 +75,13 @@ struct DonationButton: View {
         product.displayPrice
     }
     
-    private var donationTier: String {
-        switch product.id {
-        case "donation_1": return String(localized: "donation.tier1")
-        case "donation_10": return String(localized: "donation.tier2")
-        case "donation_30": return String(localized: "donation.tier3")
-        case "donation_100": return String(localized: "donation.tier4")
-        default: return displayPrice
-        }
-    }
-    
     var body: some View {
         Button(action: action) {
             VStack(spacing: 4) {
                 Text(displayPrice)
                     .font(.title2)
                     .fontWeight(.bold)
-                Text(donationTier)
+                Text(product.displayName)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
