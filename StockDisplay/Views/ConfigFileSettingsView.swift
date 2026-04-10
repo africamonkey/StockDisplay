@@ -265,7 +265,10 @@ struct ConfigFileSettingsView: View {
     
     private func importFromClipboard() {
         #if canImport(UIKit)
+        isImporting = true
+        
         guard let clipboardString = UIPasteboard.general.string else {
+            isImporting = false
             showAlert(
                 title: String(localized: "configFile.importError"),
                 message: "Clipboard is empty"
@@ -274,6 +277,7 @@ struct ConfigFileSettingsView: View {
         }
         
         guard let data = clipboardString.data(using: .utf8) else {
+            isImporting = false
             showAlert(
                 title: String(localized: "configFile.importError"),
                 message: "Cannot read clipboard content"
@@ -285,6 +289,7 @@ struct ConfigFileSettingsView: View {
             do {
                 try processImportData(data)
                 await MainActor.run {
+                    isImporting = false
                     showAlert(
                         title: String(localized: "configFile.importSuccess"),
                         message: ""
@@ -292,6 +297,7 @@ struct ConfigFileSettingsView: View {
                 }
             } catch {
                 await MainActor.run {
+                    isImporting = false
                     showAlert(
                         title: String(localized: "configFile.importError"),
                         message: error.localizedDescription
@@ -395,7 +401,9 @@ struct ConfigFileSettingsView: View {
             )
         }
         
-        isExporting = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.isExporting = false
+        }
         #endif
     }
     
