@@ -184,7 +184,15 @@ struct ConfigFileSettingsView: View {
                 .disabled(isExporting)
                 
                 Button {
-                    showingDocumentExporter = true
+                    do {
+                        _ = try buildExportJSON()
+                        showingDocumentExporter = true
+                    } catch {
+                        showAlert(
+                            title: String(localized: "configFile.exportError"),
+                            message: error.localizedDescription
+                        )
+                    }
                 } label: {
                     Text(String(localized: "configFile.exportToFile"))
                 }
@@ -205,7 +213,7 @@ struct ConfigFileSettingsView: View {
         }
         .sheet(isPresented: $showingDocumentExporter) {
             DocumentExporter(
-                content: buildExportJSON(),
+                content: (try? buildExportJSON()) ?? "{}",
                 filename: "stock_config.json"
             ) { success in
                 if success {
@@ -371,19 +379,26 @@ struct ConfigFileSettingsView: View {
     private func exportToClipboard() {
         #if canImport(UIKit)
         isExporting = true
-        let jsonString = buildExportJSON()
         
-        UIPasteboard.general.string = jsonString
-        showAlert(
-            title: String(localized: "configFile.exportSuccess"),
-            message: ""
-        )
+        do {
+            let jsonString = try buildExportJSON()
+            UIPasteboard.general.string = jsonString
+            showAlert(
+                title: String(localized: "configFile.exportSuccess"),
+                message: ""
+            )
+        } catch {
+            showAlert(
+                title: String(localized: "configFile.exportError"),
+                message: error.localizedDescription
+            )
+        }
         
         isExporting = false
         #endif
     }
     
-    private func buildExportJSON() -> String {
+    private func buildExportJSON() throws -> String {
         let stockDataArray = stocks.map { stock in
             StockConfigData(
                 id: stock.id,
@@ -415,19 +430,11 @@ struct ConfigFileSettingsView: View {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         
-        do {
-            let data = try encoder.encode(configFileData)
-            guard let jsonString = String(data: data, encoding: .utf8) else {
-                throw ExportError.encodingFailed
-            }
-            return jsonString
-        } catch {
-            showAlert(
-                title: String(localized: "configFile.exportError"),
-                message: error.localizedDescription
-            )
-            return "{}"
+        let data = try encoder.encode(configFileData)
+        guard let jsonString = String(data: data, encoding: .utf8) else {
+            throw ExportError.encodingFailed
         }
+        return jsonString
     }
     
     private func showAlert(title: String, message: String) {
