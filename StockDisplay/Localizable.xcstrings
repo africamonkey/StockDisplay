@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "AAPL or 600519" : {
+
+    },
     "addEditStock.1minute" : {
       "localizations" : {
         "en" : {
@@ -68,6 +71,22 @@
         }
       }
     },
+    "addEditStock.addNewDataSource" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add New Data Source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加新数据源"
+          }
+        }
+      }
+    },
     "addEditStock.apiConfig" : {
       "localizations" : {
         "en" : {
@@ -85,6 +104,7 @@
       }
     },
     "addEditStock.apiTemplate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -117,6 +137,7 @@
       }
     },
     "addEditStock.changeJsonPathPlaceholder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -180,54 +201,6 @@
         }
       }
     },
-    "addEditStock.selectDataSource" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Data Source"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择数据源"
-          }
-        }
-      }
-    },
-    "addEditStock.selectDataSourcePlaceholder" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select a data source..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请选择数据源..."
-          }
-        }
-      }
-    },
-    "addEditStock.addNewDataSource" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add New Data Source"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加新数据源"
-          }
-        }
-      }
-    },
     "addEditStock.displayName" : {
       "localizations" : {
         "en" : {
@@ -245,6 +218,7 @@
       }
     },
     "addEditStock.priceJsonPathPlaceholder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -324,6 +298,38 @@
         }
       }
     },
+    "addEditStock.selectDataSource" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Data Source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择数据源"
+          }
+        }
+      }
+    },
+    "addEditStock.selectDataSourcePlaceholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a data source..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择数据源..."
+          }
+        }
+      }
+    },
     "addEditStock.stockInfo" : {
       "localizations" : {
         "en" : {
@@ -341,6 +347,7 @@
       }
     },
     "addEditStock.template" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -357,6 +364,7 @@
       }
     },
     "addEditStock.template.custom" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -373,6 +381,7 @@
       }
     },
     "addEditStock.template.tencent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -389,6 +398,7 @@
       }
     },
     "addEditStock.template.xueqiu" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -405,6 +415,7 @@
       }
     },
     "addEditStock.tencentCodeExample" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -421,6 +432,7 @@
       }
     },
     "addEditStock.tencentHongKongDelay" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -469,6 +481,7 @@
       }
     },
     "addEditStock.xueqiuCodeExample" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -596,6 +609,22 @@
         }
       }
     },
+    "appearance.fontSize.veryLarge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Large"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "极大"
+          }
+        }
+      }
+    },
     "appearance.fontSize.verySmall" : {
       "localizations" : {
         "en" : {
@@ -612,18 +641,18 @@
         }
       }
     },
-    "appearance.fontSize.veryLarge" : {
+    "appearance.layout" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Very Large"
+            "value" : "Layout"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "极大"
+            "value" : "布局"
           }
         }
       }
@@ -704,6 +733,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "外观"
+          }
+        }
+      }
+    },
+    "appearance.twoColumns" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two Columns"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双栏显示"
           }
         }
       }
@@ -820,37 +865,11 @@
         }
       }
     },
-    "dataSource.basicInfo" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Basic Info"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "基本信息"
-          }
-        }
-      }
+    "data.change" : {
+
     },
-    "dataSource.name" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "名称"
-          }
-        }
-      }
+    "data.price" : {
+
     },
     "dataSource.apiConfig" : {
       "localizations" : {
@@ -884,18 +903,18 @@
         }
       }
     },
-    "dataSource.pricePath" : {
+    "dataSource.basicInfo" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Price Path"
+            "value" : "Basic Info"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "价格路径"
+            "value" : "基本信息"
           }
         }
       }
@@ -916,7 +935,55 @@
         }
       }
     },
+    "dataSource.name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "dataSource.pricePath" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price Path"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "价格路径"
+          }
+        }
+      }
+    },
     "dataSource.test" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "测试"
+          }
+        }
+      }
+    },
+    "dataSource.testButton" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -944,22 +1011,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "测试股票代码"
-          }
-        }
-      }
-    },
-    "dataSource.testButton" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Test"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "测试"
           }
         }
       }
@@ -995,24 +1046,6 @@
           }
         }
       }
-    },
-    "data.newpri" : {
-
-    },
-    "data.zdf" : {
-
-    },
-    "data[0].current" : {
-
-    },
-    "data[0].percent" : {
-
-    },
-    "https://stock.xueqiu.com/v5/stock/realtime/quotec.json?symbol={code}" : {
-
-    },
-    "https://web.ifzq.gtimg.cn/portable/mobile/qt/data?code={code}" : {
-
     },
     "language.english" : {
       "extractionState" : "stale",
@@ -1065,6 +1098,22 @@
         }
       }
     },
+    "settings.addDataSource" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Data Source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加数据源"
+          }
+        }
+      }
+    },
     "settings.addStock" : {
       "localizations" : {
         "en" : {
@@ -1093,6 +1142,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "外观"
+          }
+        }
+      }
+    },
+    "settings.dataSourceSettings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Source Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据源设置"
+          }
+        }
+      }
+    },
+    "settings.done" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
+    "settings.edit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑"
           }
         }
       }
@@ -1126,6 +1223,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "语言"
+          }
+        }
+      }
+    },
+    "settings.noDataSources" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data sources configured"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无数据源"
           }
         }
       }
@@ -1194,86 +1307,6 @@
         }
       }
     },
-    "settings.dataSourceSettings" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Data Source Settings"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "数据源设置"
-          }
-        }
-      }
-    },
-    "settings.noDataSources" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No data sources configured"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "暂无数据源"
-          }
-        }
-      }
-    },
-    "settings.addDataSource" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add Data Source"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加数据源"
-          }
-        }
-      }
-    },
-    "settings.edit" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编辑"
-          }
-        }
-      }
-    },
-    "settings.done" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Done"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成"
-          }
-        }
-      }
-    },
     "stockCard.manual" : {
       "localizations" : {
         "en" : {
@@ -1286,38 +1319,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "手动"
-          }
-        }
-      }
-    },
-    "appearance.layout" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Layout"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "布局"
-          }
-        }
-      }
-    },
-    "appearance.twoColumns" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Two Columns"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "双栏显示"
           }
         }
       }

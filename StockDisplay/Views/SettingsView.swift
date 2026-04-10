@@ -84,9 +84,6 @@ struct SettingsView: View {
                     Label(String(localized: "settings.addDataSource"), systemImage: "plus")
                 }
             }
-            .sheet(isPresented: $showingDataSourceEditor) {
-                DataSourceEditorView(dataSource: editingDataSource)
-            }
             
             Section(String(localized: "settings.otherSettings")) {
                 Toggle(String(localized: "settings.keepScreenOn"), systemImage: "display", isOn: $keepScreenOn)
@@ -104,6 +101,9 @@ struct SettingsView: View {
             } label: {
                 Text(editMode?.wrappedValue == .active ? String(localized: "settings.done") : String(localized: "settings.edit"))
             }
+        }
+        .sheet(isPresented: $showingDataSourceEditor) {
+            DataSourceEditorView(dataSource: editingDataSource)
         }
     }
     
