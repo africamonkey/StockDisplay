@@ -87,7 +87,24 @@
         }
       }
     },
+    "addEditStock.1second" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 second"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 秒"
+          }
+        }
+      }
+    },
     "addEditStock.5minutes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -99,6 +116,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "5 分钟"
+          }
+        }
+      }
+    },
+    "addEditStock.5seconds" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 seconds"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 秒"
           }
         }
       }

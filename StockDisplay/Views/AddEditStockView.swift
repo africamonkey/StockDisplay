@@ -17,7 +17,7 @@ struct AddEditStockView: View {
     @State private var showingDataSourceEditor = false
     @State private var name: String = ""
     @State private var code: String = ""
-    @State private var refreshInterval: Int = 60
+    @State private var refreshInterval: Int = 10
     
     var body: some View {
         Form {
@@ -68,10 +68,11 @@ struct AddEditStockView: View {
                 
                 Section(String(localized: "addEditStock.refreshInterval")) {
                     Picker(String(localized: "addEditStock.refresh"), selection: $refreshInterval) {
+                        Text(String(localized: "addEditStock.1second")).tag(1)
+                        Text(String(localized: "addEditStock.5seconds")).tag(5)
                         Text(String(localized: "addEditStock.10seconds")).tag(10)
                         Text(String(localized: "addEditStock.30seconds")).tag(30)
                         Text(String(localized: "addEditStock.1minute")).tag(60)
-                        Text(String(localized: "addEditStock.5minutes")).tag(300)
                     }
                 }
             }

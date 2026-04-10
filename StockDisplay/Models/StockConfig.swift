@@ -15,7 +15,7 @@ final class StockConfig {
         name: String,
         code: String,
         dataSourceId: UUID? = nil,
-        refreshInterval: Int = 60,
+        refreshInterval: Int = 10,
         sortOrder: Int = 0
     ) {
         self.id = id
