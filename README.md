@@ -2,7 +2,11 @@
 
 A minimal iOS dashboard for tracking real-time stock prices with custom API support.
 
-![Dashboard](docs/images/dashboard.png)
+https://github.com/user-attachments/assets/7990cad1-0ad7-4f79-a7c6-30406f9f6549
+
+https://github.com/user-attachments/assets/81b7eb3a-0393-46b1-96b9-53bed6422f6b
+
+https://github.com/user-attachments/assets/d540272c-c6ca-4433-9830-554875b138a
 
 ## Features
 
@@ -14,12 +18,6 @@ A minimal iOS dashboard for tracking real-time stock prices with custom API supp
 - **Adjustable font size** - Small, Medium, Large, Extra Large
 - **Keep screen on** - Prevent screen dimming while viewing
 - **Import/Export config** - Backup and restore your stock list via JSON files
-
-## Screenshots
-
-| Dashboard | Add Stock | Settings |
-|-----------|-----------|----------|
-| ![Dashboard](docs/images/dashboard.png) | ![Add Stock](docs/images/add-stock.png) | ![Settings](docs/images/settings.png) |
 
 ## Installation
 
