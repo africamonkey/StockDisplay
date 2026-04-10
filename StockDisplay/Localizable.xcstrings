@@ -930,6 +930,22 @@
         }
       }
     },
+    "configFile.importFromTextbox" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import from Textbox"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从文本框导入"
+          }
+        }
+      }
+    },
     "configFile.importFromFile" : {
       "localizations" : {
         "en" : {
@@ -947,6 +963,7 @@
       }
     },
     "configFile.importFromURL" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1012,6 +1029,7 @@
       }
     },
     "configFile.urlPlaceholder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1599,6 +1617,21 @@
           }
         }
       }
+    },
+    "从URL下载" : {
+
+    },
+    "从剪贴板导入" : {
+
+    },
+    "取消" : {
+
+    },
+    "导入" : {
+
+    },
+    "输入URL..." : {
+
     }
   },
   "version" : "1.0"

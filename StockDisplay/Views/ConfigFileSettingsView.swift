@@ -159,7 +159,7 @@ struct ConfigFileSettingsView: View {
                 Button {
                     showingClipboardImportAlert = true
                 } label: {
-                    Text(String(localized: "configFile.importFromClipboard"))
+                    Text(String(localized: "configFile.importFromTextbox"))
                 }
                 
                 Button {
@@ -270,7 +270,7 @@ struct ConfigFileSettingsView: View {
                     .padding(.horizontal)
                 }
                 .padding(.top)
-                .navigationTitle("从剪贴板导入")
+                .navigationTitle("从文本框导入")
                 .navigationBarTitleDisplayMode(.inline)
             }
             .presentationDetents([.medium, .large])
