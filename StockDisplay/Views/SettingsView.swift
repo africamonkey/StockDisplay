@@ -9,6 +9,7 @@ struct SettingsView: View {
     @Binding var navigationPath: NavigationPath
     @State private var showingDataSourceEditor = false
     @State private var editingDataSource: DataSourceConfig?
+    @State private var showDonationView = false
     @AppStorage("keepScreenOn") private var keepScreenOn: Bool = false
     
     var body: some View {
@@ -94,6 +95,22 @@ struct SettingsView: View {
                     Label(String(localized: "settings.configFile"), systemImage: "doc.fill")
                 }
             }
+            
+            Section(String(localized: "settings.about")) {
+                Link(destination: URL(string: "https://github.com/africamonkey/StockDisplay")!) {
+                    Label(String(localized: "settings.github"), systemImage: "link")
+                }
+                
+                Button {
+                    showDonationView = true
+                } label: {
+                    Label(String(localized: "settings.donate"), systemImage: "heart")
+                }
+                
+                NavigationLink(destination: AboutView()) {
+                    Label(String(localized: "settings.aboutApp"), systemImage: "info.circle")
+                }
+            }
         }
         .navigationTitle(String(localized: "settings.title"))
         .toolbar {
@@ -107,6 +124,9 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showingDataSourceEditor) {
             DataSourceEditorView(dataSource: editingDataSource)
+        }
+        .sheet(isPresented: $showDonationView) {
+            DonationView()
         }
     }
     
