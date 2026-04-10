@@ -90,6 +90,9 @@ struct SettingsView: View {
                 NavigationLink(destination: AppearanceSettingsView()) {
                     Label(String(localized: "settings.appearance"), systemImage: "paintbrush")
                 }
+                NavigationLink(destination: ConfigFileSettingsView()) {
+                    Label(String(localized: "settings.configFile"), systemImage: "doc.fill")
+                }
             }
         }
         .navigationTitle(String(localized: "settings.title"))
