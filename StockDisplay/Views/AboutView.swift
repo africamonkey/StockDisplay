@@ -19,9 +19,10 @@ struct AboutView: View {
         List {
             Section {
                 VStack(spacing: 8) {
-                    Image(systemName: "chart.line.uptrend.xyaxis")
-                        .font(.system(size: 60))
-                        .foregroundStyle(.blue)
+                    Image("AppImage")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 80, height: 80)
                     
                     Text(appName)
                         .font(.title)

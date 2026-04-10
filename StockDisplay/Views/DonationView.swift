@@ -14,8 +14,12 @@ struct DonationView: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, 20)
                 
-                if donationManager.products.isEmpty {
+                if donationManager.purchaseState == .loading {
                     ProgressView()
+                        .padding()
+                } else if donationManager.products.isEmpty {
+                    Text(String(localized: "donation.unavailable"))
+                        .foregroundStyle(.secondary)
                         .padding()
                 } else {
                     LazyVGrid(columns: [

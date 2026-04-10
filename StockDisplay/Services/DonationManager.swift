@@ -5,9 +5,9 @@ import Combine
 @MainActor
 final class DonationManager: ObservableObject {
     @Published private(set) var products: [Product] = []
-    @Published private(set) var purchaseState: PurchaseState = .idle
+    @Published var purchaseState: PurchaseState = .idle
     
-    enum PurchaseState {
+    enum PurchaseState: Equatable {
         case idle
         case loading
         case success
