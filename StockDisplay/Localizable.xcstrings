@@ -903,6 +903,22 @@
         }
       }
     },
+    "dataSource.apiURLHint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API should be in JSON format. {code} will be replaced with the stock code"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 应返回 JSON 格式的数据，{code} 会被替换为股票代码"
+          }
+        }
+      }
+    },
     "dataSource.basicInfo" : {
       "localizations" : {
         "en" : {

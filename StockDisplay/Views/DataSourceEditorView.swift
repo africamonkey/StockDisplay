@@ -32,10 +32,13 @@ struct DataSourceEditorView: View {
                 
                 Section(String(localized: "dataSource.apiConfig")) {
                     LabeledContent(String(localized: "dataSource.apiURL")) {
-                        TextField("API URL: https://" + "api.example.com?q={code}", text: $apiURL)
+                        TextField("https://" + "api.example.com?q={code}", text: $apiURL)
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()
                     }
+                    Text(String(localized: "dataSource.apiURLHint"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                     LabeledContent(String(localized: "dataSource.pricePath")) {
                         TextField("data.price", text: $priceJSONPath)
                             .textInputAutocapitalization(.never)
