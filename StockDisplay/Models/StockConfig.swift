@@ -6,9 +6,7 @@ final class StockConfig {
     var id: UUID
     var name: String
     var code: String
-    var apiURL: String
-    var priceJSONPath: String
-    var changeJSONPath: String
+    var dataSourceId: UUID?
     var refreshInterval: Int
     var sortOrder: Int
 
@@ -16,18 +14,14 @@ final class StockConfig {
         id: UUID = UUID(),
         name: String,
         code: String,
-        apiURL: String,
-        priceJSONPath: String,
-        changeJSONPath: String,
+        dataSourceId: UUID? = nil,
         refreshInterval: Int = 60,
         sortOrder: Int = 0
     ) {
         self.id = id
         self.name = name
         self.code = code
-        self.apiURL = apiURL
-        self.priceJSONPath = priceJSONPath
-        self.changeJSONPath = changeJSONPath
+        self.dataSourceId = dataSourceId
         self.refreshInterval = refreshInterval
         self.sortOrder = sortOrder
     }

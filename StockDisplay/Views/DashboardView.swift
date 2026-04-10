@@ -11,6 +11,7 @@ struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.fontScale) private var fontScale
     @Query(sort: \StockConfig.sortOrder) private var stocks: [StockConfig]
+    @Query(sort: \DataSourceConfig.sortOrder) private var dataSources: [DataSourceConfig]
     @AppStorage("stockListTwoColumns") private var stockListTwoColumns: Bool = false
     
     @State private var currentDate = Date()
@@ -41,10 +42,17 @@ struct DashboardView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        navigationPath.append(AppNavigationDestination.settings)
-                    } label: {
-                        Image(systemName: "gear")
+                    HStack(spacing: 16) {
+                        Button {
+                            refreshAllStocks()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        Button {
+                            navigationPath.append(AppNavigationDestination.settings)
+                        } label: {
+                            Image(systemName: "gear")
+                        }
                     }
                 }
             }
@@ -193,8 +201,18 @@ struct DashboardView: View {
     }
     
     private func refreshStock(_ stock: StockConfig) async {
+        guard let dataSource = dataSources.first(where: { $0.id == stock.dataSourceId }) else {
+            stockStates[stock.id] = .error("Data source not found")
+            return
+        }
+        
         do {
-            let data = try await StockAPIService.shared.fetchStockData(config: stock)
+            let data = try await StockAPIService.shared.fetchStockData(
+                code: stock.code,
+                apiURL: dataSource.apiURL,
+                priceJSONPath: dataSource.priceJSONPath,
+                changeJSONPath: dataSource.changeJSONPath
+            )
             stockStates[stock.id] = .loaded(price: data.price, change: data.change)
         } catch {
             stockStates[stock.id] = .error(error.localizedDescription)
@@ -215,9 +233,19 @@ struct DashboardView: View {
         
         await withTaskGroup(of: (UUID, StockLoadState).self) { group in
             for stock in stocks {
+                guard let dataSource = dataSources.first(where: { $0.id == stock.dataSourceId }) else {
+                    stockStates[stock.id] = .error("Data source not found")
+                    continue
+                }
+                
                 group.addTask {
                     do {
-                        let data = try await StockAPIService.shared.fetchStockData(config: stock)
+                        let data = try await StockAPIService.shared.fetchStockData(
+                            code: stock.code,
+                            apiURL: dataSource.apiURL,
+                            priceJSONPath: dataSource.priceJSONPath,
+                            changeJSONPath: dataSource.changeJSONPath
+                        )
                         return (stock.id, .loaded(price: data.price, change: data.change))
                     } catch {
                         return (stock.id, .error(error.localizedDescription))

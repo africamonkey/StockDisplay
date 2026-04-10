@@ -10,6 +10,7 @@ enum StockAPIError: Error {
     case networkError(Error)
     case invalidResponse
     case decodingError(Error)
+    case dataSourceNotFound
 }
 
 actor StockAPIService {
@@ -17,8 +18,14 @@ actor StockAPIService {
     
     private init() {}
     
-    func fetchStockData(config: StockConfig) async throws -> StockData {
-        guard let url = URL(string: config.apiURL) else {
+    func fetchStockData(
+        code: String,
+        apiURL: String,
+        priceJSONPath: String,
+        changeJSONPath: String
+    ) async throws -> StockData {
+        let urlString = apiURL.replacingOccurrences(of: "{code}", with: code)
+        guard let url = URL(string: urlString) else {
             throw StockAPIError.invalidURL
         }
         
@@ -44,8 +51,8 @@ actor StockAPIService {
         }
         
         do {
-            let price = try extractDouble(from: json, path: config.priceJSONPath)
-            let change = try extractDouble(from: json, path: config.changeJSONPath)
+            let price = try extractDouble(from: json, path: priceJSONPath)
+            let change = try extractDouble(from: json, path: changeJSONPath)
             return StockData(price: price, change: change)
         } catch {
             throw StockAPIError.decodingError(error)

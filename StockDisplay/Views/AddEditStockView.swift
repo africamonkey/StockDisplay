@@ -110,24 +110,18 @@ struct AddEditStockView: View {
         code = stock.code
         refreshInterval = stock.refreshInterval
         
-        selectedDataSource = dataSources.first { ds in
-            ds.apiURL == stock.apiURL &&
-            ds.priceJSONPath == stock.priceJSONPath &&
-            ds.changeJSONPath == stock.changeJSONPath
+        if let dataSourceId = stock.dataSourceId {
+            selectedDataSource = dataSources.first { $0.id == dataSourceId }
         }
     }
     
     private func saveStock() {
         guard let dataSource = selectedDataSource else { return }
         
-        let url = dataSource.apiURL.replacingOccurrences(of: "{code}", with: code)
-        
         if case .edit(let existing) = mode {
             existing.name = name
             existing.code = code
-            existing.apiURL = url
-            existing.priceJSONPath = dataSource.priceJSONPath
-            existing.changeJSONPath = dataSource.changeJSONPath
+            existing.dataSourceId = dataSource.id
             existing.refreshInterval = refreshInterval
             dismiss()
             return
@@ -142,9 +136,7 @@ struct AddEditStockView: View {
         let config = StockConfig(
             name: name,
             code: code,
-            apiURL: url,
-            priceJSONPath: dataSource.priceJSONPath,
-            changeJSONPath: dataSource.changeJSONPath,
+            dataSourceId: dataSource.id,
             refreshInterval: refreshInterval,
             sortOrder: newSortOrder
         )
