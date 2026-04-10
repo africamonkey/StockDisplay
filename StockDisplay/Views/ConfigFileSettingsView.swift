@@ -129,6 +129,8 @@ struct ConfigFileSettingsView: View {
     @State private var urlText: String = ""
     @State private var urlImportText: String = ""
     @State private var showingURLImportAlert: Bool = false
+    @State private var showingClipboardImportAlert: Bool = false
+    @State private var clipboardImportText: String = ""
     @State private var isImporting: Bool = false
     @State private var isExporting: Bool = false
     @State private var showingAlert: Bool = false
@@ -155,7 +157,7 @@ struct ConfigFileSettingsView: View {
                 .disabled(isImporting)
                 
                 Button {
-                    importFromClipboard()
+                    showingClipboardImportAlert = true
                 } label: {
                     Text(String(localized: "configFile.importFromClipboard"))
                 }
@@ -217,6 +219,18 @@ struct ConfigFileSettingsView: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
         }
+        .alert("从剪贴板导入", isPresented: $showingClipboardImportAlert) {
+            Button("取消", role: .cancel) {
+                clipboardImportText = ""
+            }
+            Button("导入", role: .none) {
+                importFromClipboardText()
+            }
+        } message: {
+            TextEditor(text: $clipboardImportText)
+                .frame(minHeight: 150)
+                .font(.body)
+        }
         #if canImport(UIKit)
         .sheet(isPresented: $showingDocumentPicker) {
             DocumentPicker(types: [.json]) { url in
@@ -274,27 +288,30 @@ struct ConfigFileSettingsView: View {
         }
     }
     
-    private func importFromClipboard() {
-        #if canImport(UIKit)
+    private func importFromClipboardText() {
         isImporting = true
         
-        guard let clipboardString = UIPasteboard.general.string else {
+        guard !clipboardImportText.isEmpty else {
             isImporting = false
             showAlert(
                 title: String(localized: "configFile.importError"),
-                message: "Clipboard is empty"
+                message: "Input is empty"
             )
+            clipboardImportText = ""
             return
         }
         
-        guard let data = clipboardString.data(using: .utf8) else {
+        guard let data = clipboardImportText.data(using: .utf8) else {
             isImporting = false
             showAlert(
                 title: String(localized: "configFile.importError"),
-                message: "Cannot read clipboard content"
+                message: "Cannot read input content"
             )
+            clipboardImportText = ""
             return
         }
+        
+        clipboardImportText = ""
         
         Task {
             do {
@@ -316,7 +333,6 @@ struct ConfigFileSettingsView: View {
                 }
             }
         }
-        #endif
     }
     
     private func importFromFile(url: URL) {
