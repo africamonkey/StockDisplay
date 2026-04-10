@@ -208,6 +208,12 @@ struct AddEditStockView: View {
     private func saveStock() {
         let config: StockConfig
         
+        let newSortOrder: Int = {
+            let descriptor = FetchDescriptor<StockConfig>(sortBy: [SortDescriptor(\.sortOrder, order: .reverse)])
+            let existingStocks = (try? modelContext.fetch(descriptor)) ?? []
+            return (existingStocks.first?.sortOrder ?? -1) + 1
+        }()
+        
         if template == .tencentFinance {
             let url = "https://web.ifzq.gtimg.cn/portable/mobile/qt/data?code=\(code)"
             if case .edit(let existing) = mode {
@@ -227,7 +233,8 @@ struct AddEditStockView: View {
                 apiURL: url,
                 priceJSONPath: "data.newpri",
                 changeJSONPath: "data.zdf",
-                refreshInterval: refreshInterval
+                refreshInterval: refreshInterval,
+                sortOrder: newSortOrder
             )
         } else if template == .xueqiu {
             let url = "https://stock.xueqiu.com/v5/stock/realtime/quotec.json?symbol=\(code)"
@@ -248,7 +255,8 @@ struct AddEditStockView: View {
                 apiURL: url,
                 priceJSONPath: "data[0].current",
                 changeJSONPath: "data[0].percent",
-                refreshInterval: refreshInterval
+                refreshInterval: refreshInterval,
+                sortOrder: newSortOrder
             )
         } else {
             if case .edit(let existing) = mode {
@@ -268,7 +276,8 @@ struct AddEditStockView: View {
                 apiURL: apiURL,
                 priceJSONPath: priceJSONPath,
                 changeJSONPath: changeJSONPath,
-                refreshInterval: refreshInterval
+                refreshInterval: refreshInterval,
+                sortOrder: newSortOrder
             )
         }
         
