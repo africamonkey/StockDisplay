@@ -20,6 +20,7 @@ struct StockDisplayApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             StockConfig.self,
+            DataSourceConfig.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,
