@@ -54,13 +54,6 @@ StockDisplay uses **Data Sources** to fetch stock prices. Each data source defin
 - **Price JSON Path** - Dot-notation path to extract the price (e.g., `chart.result[0].meta.regularMarketPrice`)
 - **Change JSON Path** - Dot-notation path to extract the price change (e.g., `chart.result[0].meta.regularMarketChangePercent`)
 
-#### Built-in: Yahoo Finance
-
-Yahoo Finance is pre-configured with:
-- API URL: `https://query1.finance.yahoo.com/v8/finance/chart/{symbol}`
-- Price Path: `chart.result[0].meta.regularMarketPrice`
-- Change Path: `chart.result[0].meta.regularMarketChangePercent`
-
 #### Custom Data Source
 
 To use a custom API:
