@@ -5,7 +5,10 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.editMode) private var editMode
     @Query(sort: \StockConfig.sortOrder) private var stocks: [StockConfig]
+    @Query(sort: \DataSourceConfig.sortOrder) private var dataSources: [DataSourceConfig]
     @Binding var navigationPath: NavigationPath
+    @State private var showingDataSourceEditor = false
+    @State private var editingDataSource: DataSourceConfig?
     @AppStorage("keepScreenOn") private var keepScreenOn: Bool = false
     
     var body: some View {
@@ -47,6 +50,44 @@ struct SettingsView: View {
                 }
             }
             
+            Section(String(localized: "settings.dataSourceSettings")) {
+                if dataSources.isEmpty {
+                    Text(String(localized: "settings.noDataSources"))
+                        .foregroundStyle(.secondary)
+                } else {
+                    ForEach(dataSources) { dataSource in
+                        Button {
+                            editingDataSource = dataSource
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(dataSource.name)
+                                        .font(.headline)
+                                        .foregroundStyle(.primary)
+                                    Text(dataSource.apiURL)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(1)
+                                }
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .onDelete(perform: deleteDataSources)
+                }
+                
+                Button {
+                    editingDataSource = nil
+                    showingDataSourceEditor = true
+                } label: {
+                    Label(String(localized: "settings.addDataSource"), systemImage: "plus")
+                }
+            }
+            .sheet(isPresented: $showingDataSourceEditor) {
+                DataSourceEditorView(dataSource: editingDataSource)
+            }
+            
             Section(String(localized: "settings.otherSettings")) {
                 Toggle(String(localized: "settings.keepScreenOn"), systemImage: "display", isOn: $keepScreenOn)
                 NavigationLink(destination: AppearanceSettingsView()) {
@@ -81,6 +122,14 @@ struct SettingsView: View {
         withAnimation {
             for (index, stock) in reorderedStocks.enumerated() {
                 stock.sortOrder = index
+            }
+        }
+    }
+    
+    private func deleteDataSources(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(dataSources[index])
             }
         }
     }
