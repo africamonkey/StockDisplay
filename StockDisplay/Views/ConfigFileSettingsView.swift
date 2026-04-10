@@ -127,6 +127,8 @@ struct ConfigFileSettingsView: View {
     @Query(sort: \DataSourceConfig.sortOrder) private var dataSources: [DataSourceConfig]
     
     @State private var urlText: String = ""
+    @State private var urlImportText: String = ""
+    @State private var showingURLImportAlert: Bool = false
     @State private var isImporting: Bool = false
     @State private var isExporting: Bool = false
     @State private var showingAlert: Bool = false
@@ -140,10 +142,10 @@ struct ConfigFileSettingsView: View {
         List {
             Section(String(localized: "configFile.import")) {
                 Button {
-                    importFromURL()
+                    showingURLImportAlert = true
                 } label: {
                     HStack {
-                        Text(String(localized: "configFile.importFromURL"))
+                        Text("从URL下载")
                         Spacer()
                         if isImporting {
                             ProgressView()
@@ -151,11 +153,6 @@ struct ConfigFileSettingsView: View {
                     }
                 }
                 .disabled(isImporting)
-                
-                TextField(String(localized: "configFile.urlPlaceholder"), text: $urlText)
-                    .textFieldStyle(.roundedBorder)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
                 
                 Button {
                     importFromClipboard()
@@ -205,6 +202,20 @@ struct ConfigFileSettingsView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(alertMessage)
+        }
+        .alert("从URL下载", isPresented: $showingURLImportAlert) {
+            Button("取消", role: .cancel) {
+                urlImportText = ""
+            }
+            Button("导入") {
+                urlText = urlImportText
+                urlImportText = ""
+                importFromURL()
+            }
+        } message: {
+            TextField("输入URL...", text: $urlImportText)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
         }
         #if canImport(UIKit)
         .sheet(isPresented: $showingDocumentPicker) {
