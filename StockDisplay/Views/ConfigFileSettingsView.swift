@@ -134,6 +134,7 @@ struct ConfigFileSettingsView: View {
     @State private var alertMessage: String = ""
     @State private var showingDocumentPicker: Bool = false
     @State private var showingDocumentExporter: Bool = false
+    @State private var exportedData: String = ""
     
     var body: some View {
         List {
@@ -185,7 +186,7 @@ struct ConfigFileSettingsView: View {
                 
                 Button {
                     do {
-                        _ = try buildExportJSON()
+                        exportedData = try buildExportJSON()
                         showingDocumentExporter = true
                     } catch {
                         showAlert(
@@ -213,7 +214,7 @@ struct ConfigFileSettingsView: View {
         }
         .sheet(isPresented: $showingDocumentExporter) {
             DocumentExporter(
-                content: (try? buildExportJSON()) ?? "{}",
+                content: exportedData,
                 filename: "stock_config.json"
             ) { success in
                 if success {
