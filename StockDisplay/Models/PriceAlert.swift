@@ -5,10 +5,15 @@ import SwiftData
 final class PriceAlert {
     var id: UUID
     var stockId: UUID
-    var alertType: AlertType
+    var alertTypeRaw: String
     var targetPrice: Double
     var isEnabled: Bool
     var hasTriggered: Bool
+
+    var alertType: AlertType {
+        get { AlertType(rawValue: alertTypeRaw) ?? .upper }
+        set { alertTypeRaw = newValue.rawValue }
+    }
 
     init(
         id: UUID = UUID(),
@@ -20,7 +25,7 @@ final class PriceAlert {
     ) {
         self.id = id
         self.stockId = stockId
-        self.alertType = alertType
+        self.alertTypeRaw = alertType.rawValue
         self.targetPrice = targetPrice
         self.isEnabled = isEnabled
         self.hasTriggered = hasTriggered
