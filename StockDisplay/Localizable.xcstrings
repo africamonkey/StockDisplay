@@ -1,12 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
-    "AAPL or 600519" : {
-
-    },
     "aboutApp.build" : {
       "localizations" : {
         "en" : {
@@ -706,9 +700,6 @@
         }
       }
     },
-    "Africamonkey" : {
-
-    },
     "appearance.colorMode" : {
       "localizations" : {
         "en" : {
@@ -1389,12 +1380,6 @@
         }
       }
     },
-    "data.change" : {
-
-    },
-    "data.price" : {
-
-    },
     "dataSource.apiConfig" : {
       "localizations" : {
         "en" : {
@@ -1792,7 +1777,20 @@
       }
     },
     "OK" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好"
+          }
+        }
+      }
     },
     "premium.feature.alerts" : {
       "localizations" : {
@@ -2323,37 +2321,6 @@
           }
         }
       }
-    },
-    "从URL下载" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Manual"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "手动"
-          }
-        }
-      }
-    },
-    "从URL下载" : {
-
-    },
-    "从文本框导入" : {
-
-    },
-    "取消" : {
-
-    },
-    "导入" : {
-
-    },
-    "输入URL..." : {
-
     }
   },
   "version" : "1.0"
