@@ -72,6 +72,7 @@ struct DashboardView: View {
         }
         .onAppear {
             initializeStockStates()
+            highlightedStocks = Set(allAlerts.filter { $0.hasTriggered }.map { $0.stockId })
             startTimer()
             startAutoRefresh()
             refreshAllStocks()
