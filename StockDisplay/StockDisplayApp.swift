@@ -54,6 +54,7 @@ struct StockDisplayApp: App {
             ContentView()
                 .preferredColorScheme(colorScheme)
                 .environment(\.fontScale, fontScale)
+                .onAppear { NotificationService.shared.requestPermission() }
         }
         .modelContainer(sharedModelContainer)
     }
