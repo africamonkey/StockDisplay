@@ -191,7 +191,7 @@ struct AddEditStockView: View {
         }
     }
     
-    private func addAlert() {
+private func addAlert() {
         guard case .edit(let stock) = mode,
               let price = Double(newAlertPrice) else { return }
         
@@ -201,6 +201,7 @@ struct AddEditStockView: View {
             targetPrice: price
         )
         modelContext.insert(alert)
+        try? modelContext.save()
         
         showingAddAlert = false
         newAlertPrice = ""

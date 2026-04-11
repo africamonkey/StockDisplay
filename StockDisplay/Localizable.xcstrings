@@ -1258,6 +1258,57 @@
         }
       }
     },
+    "dashboard.alert.delete" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除"
+          }
+        }
+      }
+    },
+    "dashboard.alert.deleteConfirmMessage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete all triggered price alerts for this stock?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除该股票所有已触发的价格提醒吗？"
+          }
+        }
+      }
+    },
+    "dashboard.alert.deleteConfirmTitle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Triggered Alerts"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除已触发的提醒"
+          }
+        }
+      }
+    },
     "dashboard.error" : {
       "localizations" : {
         "en" : {
@@ -1334,54 +1385,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "添加股票"
-          }
-        }
-      }
-    },
-    "dashboard.alert.deleteConfirmTitle" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Triggered Alerts"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除已触发的提醒"
-          }
-        }
-      }
-    },
-    "dashboard.alert.deleteConfirmMessage" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Are you sure you want to delete all triggered price alerts for this stock?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "确定要删除该股票所有已触发的价格提醒吗？"
-          }
-        }
-      }
-    },
-    "dashboard.alert.delete" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除"
           }
         }
       }
