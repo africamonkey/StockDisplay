@@ -193,7 +193,12 @@ struct AddEditStockView: View {
     
     private func addAlert() {
         guard case .edit(let stock) = mode,
-              let price = Double(newAlertPrice) else { return }
+              let price = Double(newAlertPrice) else {
+            print("DEBUG addAlert failed: mode=\(mode), newAlertPrice=\(newAlertPrice)")
+            return
+        }
+        
+        print("DEBUG addAlert: stockId=\(stock.id), alertType=\(newAlertType), price=\(price)")
         
         let alert = PriceAlert(
             stockId: stock.id,
@@ -201,6 +206,15 @@ struct AddEditStockView: View {
             targetPrice: price
         )
         modelContext.insert(alert)
+        
+        do {
+            try modelContext.save()
+            print("DEBUG addAlert: saved successfully")
+        } catch {
+            print("DEBUG addAlert: save failed - \(error)")
+        }
+        
+        print("DEBUG addAlert: allAlerts count after save = \(allAlerts.count)")
         
         showingAddAlert = false
         newAlertPrice = ""
