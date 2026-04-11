@@ -80,25 +80,27 @@ struct AddEditStockView: View {
                     }
                 }
                 
-                Section {
-                    ForEach(stockAlerts) { alert in
-                        HStack {
-                            Text(alert.alertType.displayName)
-                                .frame(width: 80, alignment: .leading)
-                            Text(String(format: "%.2f", alert.targetPrice))
-                                .foregroundStyle(.secondary)
-                            Spacer()
+                if case .edit = mode {
+                    Section {
+                        ForEach(stockAlerts) { alert in
+                            HStack {
+                                Text(alert.alertType.displayName)
+                                    .frame(width: 80, alignment: .leading)
+                                Text(String(format: "%.2f", alert.targetPrice))
+                                    .foregroundStyle(.secondary)
+                                Spacer()
+                            }
                         }
+                        .onDelete(perform: deleteAlerts)
+                        
+                        Button {
+                            showingAddAlert = true
+                        } label: {
+                            Label("添加提醒", systemImage: "plus.circle")
+                        }
+                    } header: {
+                        Text("提醒")
                     }
-                    .onDelete(perform: deleteAlerts)
-                    
-                    Button {
-                        showingAddAlert = true
-                    } label: {
-                        Label("添加提醒", systemImage: "plus.circle")
-                    }
-                } header: {
-                    Text("提醒")
                 }
             }
         }
