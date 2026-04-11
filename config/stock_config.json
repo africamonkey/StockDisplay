@@ -1,0 +1,119 @@
+{
+  "dataSources" : [
+    {
+      "apiURL" : "https:\/\/stock.xueqiu.com\/v5\/stock\/realtime\/quotec.json?symbol={code}",
+      "changeJSONPath" : "data[0].percent",
+      "id" : "9A67EEE0-1723-4E3D-BC07-6F9FF1FFBB0D",
+      "name" : "雪球",
+      "priceJSONPath" : "data[0].current",
+      "sortOrder" : 0
+    },
+    {
+      "apiURL" : "https:\/\/web.ifzq.gtimg.cn\/portable\/mobile\/qt\/data?code={code}",
+      "changeJSONPath" : "data.zdf",
+      "id" : "A54440A8-63E6-4CDA-9DAD-DF128D201711",
+      "name" : "腾讯财经",
+      "priceJSONPath" : "data.newpri",
+      "sortOrder" : 1
+    }
+  ],
+  "stocks" : [
+    {
+      "code" : "usPONY.OQ",
+      "dataSourceId" : "A54440A8-63E6-4CDA-9DAD-DF128D201711",
+      "id" : "1A5FB750-58B8-440B-A4CF-D0A43DCA13E8",
+      "name" : "小马智行",
+      "refreshInterval" : 10,
+      "sortOrder" : 0
+    },
+    {
+      "code" : "02026",
+      "dataSourceId" : "9A67EEE0-1723-4E3D-BC07-6F9FF1FFBB0D",
+      "id" : "CC7857F0-727F-49E8-9B8A-73F73C0E14C8",
+      "name" : "小马智行-W",
+      "refreshInterval" : 10,
+      "sortOrder" : 1
+    },
+    {
+      "code" : "usWRD.OQ",
+      "dataSourceId" : "A54440A8-63E6-4CDA-9DAD-DF128D201711",
+      "id" : "59C95F81-C256-41BA-9368-DCE31EF0D4DA",
+      "name" : "文远知行",
+      "refreshInterval" : 10,
+      "sortOrder" : 2
+    },
+    {
+      "code" : "00800",
+      "dataSourceId" : "9A67EEE0-1723-4E3D-BC07-6F9FF1FFBB0D",
+      "id" : "B796252C-CF85-4E70-9D4E-1428168E709E",
+      "name" : "文远知行-W",
+      "refreshInterval" : 10,
+      "sortOrder" : 3
+    },
+    {
+      "code" : "usHPQ.OQ",
+      "dataSourceId" : "A54440A8-63E6-4CDA-9DAD-DF128D201711",
+      "id" : "34129627-5A62-4A27-AB17-BB08C3CFF7EB",
+      "name" : "惠普",
+      "refreshInterval" : 10,
+      "sortOrder" : 4
+    },
+    {
+      "code" : "01810",
+      "dataSourceId" : "9A67EEE0-1723-4E3D-BC07-6F9FF1FFBB0D",
+      "id" : "D0E80219-A0D0-42ED-895A-F8A91ADDE2B1",
+      "name" : "小米集团-W",
+      "refreshInterval" : 10,
+      "sortOrder" : 5
+    },
+    {
+      "code" : "usNVDA.OQ",
+      "dataSourceId" : "A54440A8-63E6-4CDA-9DAD-DF128D201711",
+      "id" : "D2C3ED55-6FBF-454C-A883-4BB1A2A522B4",
+      "name" : "英伟达",
+      "refreshInterval" : 10,
+      "sortOrder" : 6
+    },
+    {
+      "code" : "00700",
+      "dataSourceId" : "9A67EEE0-1723-4E3D-BC07-6F9FF1FFBB0D",
+      "id" : "2CBF2315-E87D-4B91-B37F-9BD6B6650302",
+      "name" : "腾讯控股",
+      "refreshInterval" : 10,
+      "sortOrder" : 7
+    },
+    {
+      "code" : "usSPY.OQ",
+      "dataSourceId" : "A54440A8-63E6-4CDA-9DAD-DF128D201711",
+      "id" : "BA7A6D44-B4A8-4D31-B1FA-4AE090442C71",
+      "name" : "标普500ETF",
+      "refreshInterval" : 10,
+      "sortOrder" : 8
+    },
+    {
+      "code" : "09988",
+      "dataSourceId" : "9A67EEE0-1723-4E3D-BC07-6F9FF1FFBB0D",
+      "id" : "82BBEA70-0BE2-47F0-BA5F-F542F790B37A",
+      "name" : "阿里巴巴-W",
+      "refreshInterval" : 10,
+      "sortOrder" : 9
+    },
+    {
+      "code" : "usQQQ.OQ",
+      "dataSourceId" : "A54440A8-63E6-4CDA-9DAD-DF128D201711",
+      "id" : "8FED9B3F-01DB-4D56-9DDE-5F8C5C67A8E5",
+      "name" : "纳指100ETF",
+      "refreshInterval" : 10,
+      "sortOrder" : 10
+    },
+    {
+      "code" : "09618",
+      "dataSourceId" : "9A67EEE0-1723-4E3D-BC07-6F9FF1FFBB0D",
+      "id" : "618680FB-482E-44AF-8C7C-697CC3408198",
+      "name" : "京东集团-W",
+      "refreshInterval" : 10,
+      "sortOrder" : 11
+    }
+  ],
+  "version" : 1
+}
