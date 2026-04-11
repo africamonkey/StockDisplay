@@ -21,6 +21,7 @@ struct StockDisplayApp: App {
         let schema = Schema([
             StockConfig.self,
             DataSourceConfig.self,
+            PriceAlert.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,
