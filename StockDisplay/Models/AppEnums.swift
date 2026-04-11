@@ -46,3 +46,22 @@ enum StockChangeColorMode: String, CaseIterable {
         }
     }
 }
+
+enum AlertType: String, Codable, CaseIterable {
+    case upper
+    case lower
+    
+    var displayName: String {
+        switch self {
+        case .upper: return "向上突破"
+        case .lower: return "向下突破"
+        }
+    }
+    
+    var notificationKeyword: String {
+        switch self {
+        case .upper: return "向上突破"
+        case .lower: return "向下突破"
+        }
+    }
+}
