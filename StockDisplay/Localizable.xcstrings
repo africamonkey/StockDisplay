@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "AAPL or 600519" : {
+
+    },
     "aboutApp.build" : {
       "localizations" : {
         "en" : {
@@ -700,6 +706,9 @@
         }
       }
     },
+    "Africamonkey" : {
+
+    },
     "appearance.colorMode" : {
       "localizations" : {
         "en" : {
@@ -1380,6 +1389,12 @@
         }
       }
     },
+    "data.change" : {
+
+    },
+    "data.price" : {
+
+    },
     "dataSource.apiConfig" : {
       "localizations" : {
         "en" : {
@@ -1772,6 +1787,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "语言"
+          }
+        }
+      }
+    },
+    "notification.alert.body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[%@] %@ is now %@, reached your target price %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[%@] %@ 现价 %@，已达到您的目标价 %@"
+          }
+        }
+      }
+    },
+    "notification.alert.lower" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price Breakdown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向下突破"
+          }
+        }
+      }
+    },
+    "notification.alert.upper" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price Breakout"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向上突破"
           }
         }
       }
@@ -2274,53 +2337,20 @@
         }
       }
     },
-    "notification.alert.upper" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Price Breakout"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "向上突破"
-          }
-        }
-      }
+    "从URL下载" : {
+
     },
-    "notification.alert.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Price Breakdown"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "向下突破"
-          }
-        }
-      }
+    "从文本框导入" : {
+
     },
-    "notification.alert.body" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[%@] %@ is now %@, reached your target price %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[%@] %@ 现价 %@，已达到您的目标价 %@"
-          }
-        }
-      }
+    "取消" : {
+
+    },
+    "导入" : {
+
+    },
+    "输入URL..." : {
+
     }
   },
   "version" : "1.0"
