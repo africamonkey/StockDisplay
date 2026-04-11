@@ -96,10 +96,10 @@ struct AddEditStockView: View {
                         Button {
                             showingAddAlert = true
                         } label: {
-                            Label("添加提醒", systemImage: "plus.circle")
+                            Label(String(localized: "addEditStock.alert.add"), systemImage: "plus.circle")
                         }
                     } header: {
-                        Text("提醒")
+                        Text(String(localized: "addEditStock.alert.sectionHeader"))
                     }
                 }
             }
@@ -120,8 +120,8 @@ struct AddEditStockView: View {
         .sheet(isPresented: $showingAddAlert) {
             NavigationStack {
                 Form {
-                    Section("提醒类型") {
-                        Picker("类型", selection: $newAlertType) {
+                    Section(String(localized: "addEditStock.alert.type")) {
+                        Picker(String(localized: "addEditStock.alert.typeLabel"), selection: $newAlertType) {
                             ForEach(AlertType.allCases, id: \.self) { type in
                                 Text(type.displayName).tag(type)
                             }
@@ -129,22 +129,22 @@ struct AddEditStockView: View {
                         .pickerStyle(.segmented)
                     }
                     
-                    Section("目标价格") {
-                        TextField("输入价格", text: $newAlertPrice)
+                    Section(String(localized: "addEditStock.alert.targetPrice")) {
+                        TextField(String(localized: "addEditStock.alert.pricePlaceholder"), text: $newAlertPrice)
                             .keyboardType(.decimalPad)
                     }
                 }
-                .navigationTitle("添加提醒")
+                .navigationTitle(String(localized: "addEditStock.alert.title"))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("取消") {
+                        Button(String(localized: "common.cancel")) {
                             showingAddAlert = false
                             newAlertPrice = ""
                         }
                     }
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("添加") {
+                        Button(String(localized: "addEditStock.alert.add")) {
                             addAlert()
                         }
                         .disabled(Double(newAlertPrice) == nil)
