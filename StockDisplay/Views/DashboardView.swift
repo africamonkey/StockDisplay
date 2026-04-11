@@ -121,9 +121,6 @@ struct DashboardView: View {
                     singleColumnList(geometry: geometry)
                 }
             }
-            .refreshable {
-                await refreshAllStocksAsync()
-            }
         }
     }
     
