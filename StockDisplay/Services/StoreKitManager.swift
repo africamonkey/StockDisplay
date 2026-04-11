@@ -11,7 +11,7 @@ enum StoreKitPurchaseError: Error {
 class StoreKitManager: ObservableObject {
     @Published var isPremium: Bool = false
     
-    private let premiumProductID = "com.yourcompany.stockdisplay.premium"
+    private let premiumProductID = "premium"
     
     init() {
         if let storedValue = UserDefaults.standard.object(forKey: "isPremium") as? Bool {

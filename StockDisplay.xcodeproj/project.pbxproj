@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E3DD1EAA2F8A3D9F00040D55 /* StoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = E3DD1EA92F8A3D9F00040D55 /* StoreKit.storekit */; };
+		E3DD1EAF2F8A3E1E00040D55 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DD1EAE2F8A3E1D00040D55 /* StoreKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E38299B52F854885008705B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,8 @@
 		E38299A52F854884008705B0 /* StockDisplay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E38299B42F854885008705B0 /* StockDisplayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StockDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E38299BE2F854885008705B0 /* StockDisplayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StockDisplayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3DD1EA92F8A3D9F00040D55 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = StoreKit.storekit; path = StockDisplay/StoreKit.storekit; sourceTree = "<group>"; };
+		E3DD1EAE2F8A3E1D00040D55 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3DD1EAF2F8A3E1E00040D55 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +83,11 @@
 		E382999C2F854884008705B0 = {
 			isa = PBXGroup;
 			children = (
+				E3DD1EA92F8A3D9F00040D55 /* StoreKit.storekit */,
 				E38299A72F854884008705B0 /* StockDisplay */,
 				E38299B72F854885008705B0 /* StockDisplayTests */,
 				E38299C12F854885008705B0 /* StockDisplayUITests */,
+				E3DD1EAD2F8A3E1D00040D55 /* Frameworks */,
 				E38299A62F854884008705B0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +100,14 @@
 				E38299BE2F854885008705B0 /* StockDisplayUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E3DD1EAD2F8A3E1D00040D55 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3DD1EAE2F8A3E1D00040D55 /* StoreKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3DD1EAA2F8A3D9F00040D55 /* StoreKit.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +415,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = UTC679J6KQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -435,7 +454,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = UTC679J6KQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
