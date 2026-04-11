@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockDisplay - Real-time Stock Price Tracker</title>
+    <meta name="description" content="A minimal iOS dashboard for tracking real-time stock prices with custom API support.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #007AFF;
+            --bg-color: #F5F5F7;
+            --text-color: #1D1D1F;
+            --secondary-text: #86868B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--secondary-text);
+            margin-bottom: 32px;
+        }
+
+        .app-preview {
+            background: linear-gradient(180deg, #1D1D1F 0%, #2D2D2D 100%);
+            border-radius: 32px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-card {
+            background: #3A3A3C;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .stock-info {
+            text-align: left;
+        }
+
+        .stock-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .stock-code {
+            color: #98989D;
+            font-size: 14px;
+        }
+
+        .stock-price {
+            text-align: right;
+        }
+
+        .price {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .price-change {
+            font-size: 14px;
+            color: #34C759;
+        }
+
+        .price-change.negative {
+            color: #FF3B30;
+        }
+
+        .features {
+            padding: 80px 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .feature-item {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            color: var(--secondary-text);
+            font-size: 15px;
+        }
+
+        .screenshots {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .screenshots h2 {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .screenshot {
+            border-radius: 36px;
+            overflow: hidden;
+            aspect-ratio: 9/19.5;
+            background: #1D1D1F;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+        }
+
+        footer {
+            background: #1D1D1F;
+            color: white;
+            padding: 60px 0 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 60px;
+        }
+
+        .footer-column h4 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #86868B;
+            margin-bottom: 16px;
+        }
+
+        .footer-column a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            color: #86868B;
+            font-size: 12px;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #424245;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">StockDisplay</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#screenshots">Screenshots</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>StockDisplay</h1>
+            <p>Real-time stock prices at a glance</p>
+            
+            <div class="app-preview">
+                <div class="preview-card">
+                    <div class="stock-info">
+                        <div class="stock-name">Apple Inc.</div>
+                        <div class="stock-code">AAPL</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$178.52</div>
+                        <div class="price-change">+2.34%</div>
+                    </div>
+                </div>
+                <div class="preview-card">
+                    <div class="stock-info">
+                        <div class="stock-name">Tesla Inc.</div>
+                        <div class="stock-code">TSLA</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$245.80</div>
+                        <div class="price-change negative">-1.25%</div>
+                    </div>
+                </div>
+                <div class="preview-card">
+                    <div class="stock-info">
+                        <div class="stock-name">Microsoft</div>
+                        <div class="stock-code">MSFT</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$378.91</div>
+                        <div class="price-change">+0.87%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-time Prices</h3>
+                    <p>Track multiple stocks with live price updates. Choose from auto-refresh intervals: 10s, 30s, 1min, 5min, or manual.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Custom API Support</h3>
+                    <p>Use Yahoo Finance or configure your own API endpoint. Full flexibility for power users.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Light & Dark Theme</h3>
+                    <p>Follows system appearance or choose your preferred theme. Adjustable font sizes for better readability.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <h3>Keep Screen On</h3>
+                    <p>Prevent screen dimming while viewing your stocks. Perfect for desk setups.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💾</div>
+                    <h3>Import/Export Config</h3>
+                    <p>Backup and restore your stock list via JSON files. Easy configuration sharing.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Multi-language</h3>
+                    <p>Supports English and Simplified Chinese. Automatically follows system language settings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="screenshots" class="screenshots">
+        <div class="container">
+            <h2>Screenshots</h2>
+            <div class="screenshot-grid">
+                <div class="screenshot"><img src="dashboard1.png" alt="Dashboard View"></div>
+                <div class="screenshot"><img src="dashboard2.png" alt="Dark Mode"></div>
+                <div class="screenshot"><img src="settings.png" alt="Settings"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="logo" style="margin-bottom: 16px;">StockDisplay</div>
+                    <p style="color: #86868B; font-size: 14px;">Real-time stock prices at a glance</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>App</h4>
+                        <a href="#features">Features</a>
+                        <a href="#screenshots">Screenshots</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="privacy.html">Privacy Policy</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Developer</h4>
+                        <a href="https://github.com/africamonkey/StockDisplay" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                Copyright © 2026 Africamonkey. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
