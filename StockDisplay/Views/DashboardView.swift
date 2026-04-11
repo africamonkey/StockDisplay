@@ -132,7 +132,8 @@ struct DashboardView: View {
                 StockCardView(
                     name: stock.name,
                     code: stock.code,
-                    loadState: stockStates[stock.id] ?? .idle
+                    loadState: stockStates[stock.id] ?? .idle,
+                    isHighlighted: highlightedStocks.contains(stock.id)
                 )
             }
         }
@@ -147,7 +148,8 @@ struct DashboardView: View {
                 StockCardView(
                     name: stock.name,
                     code: stock.code,
-                    loadState: stockStates[stock.id] ?? .idle
+                    loadState: stockStates[stock.id] ?? .idle,
+                    isHighlighted: highlightedStocks.contains(stock.id)
                 )
             }
         }

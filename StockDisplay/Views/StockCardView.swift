@@ -13,7 +13,14 @@ struct StockCardView: View {
     let name: String
     let code: String
     let loadState: StockLoadState
-    let isHighlighted: Bool = false
+    let isHighlighted: Bool
+    
+    init(name: String, code: String, loadState: StockLoadState, isHighlighted: Bool = false) {
+        self.name = name
+        self.code = code
+        self.loadState = loadState
+        self.isHighlighted = isHighlighted
+    }
     
     private var colorMode: StockChangeColorMode {
         StockChangeColorMode(rawValue: stockChangeColorMode) ?? .redUpGreenDown
