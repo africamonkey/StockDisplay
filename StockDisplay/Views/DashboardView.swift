@@ -312,6 +312,7 @@ struct DashboardView: View {
             if shouldTrigger {
                 alert.hasTriggered = true
                 highlightedStocks.insert(stock.id)
+                try? modelContext.save()
                 NotificationService.shared.sendAlertNotification(
                     stockName: stock.name,
                     stockCode: stock.code,
