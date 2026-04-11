@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 enum AppNavigationDestination: Hashable {
     case settings
@@ -20,6 +21,8 @@ struct DashboardView: View {
     @State private var refreshTask: Task<Void, Never>?
     @State private var lastRefresh: [UUID: Date] = [:]
     @State private var navigationPath = NavigationPath()
+    @State private var highlightedStocks: Set<UUID> = []
+    @Query private var allAlerts: [PriceAlert]
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -214,6 +217,9 @@ struct DashboardView: View {
                 changeJSONPath: dataSource.changeJSONPath
             )
             stockStates[stock.id] = .loaded(price: data.price, change: data.change)
+            if case .loaded(price: let price, change: _) = stockStates[stock.id] {
+                checkAlerts(for: stock, currentPrice: price)
+            }
         } catch {
             stockStates[stock.id] = .error(error.localizedDescription)
         }
@@ -256,6 +262,62 @@ struct DashboardView: View {
             for await (id, state) in group {
                 stockStates[id] = state
             }
+            
+            for stock in stocks {
+                if case .loaded(price: let price, change: _) = stockStates[stock.id] {
+                    checkAlerts(for: stock, currentPrice: price)
+                }
+            }
         }
+    }
+    
+    private func checkAlerts(for stock: StockConfig, currentPrice: Double) {
+        let stockAlerts = allAlerts.filter {
+            $0.stockId == stock.id && $0.isEnabled && !$0.hasTriggered
+        }
+        
+        for alert in stockAlerts {
+            var shouldTrigger = false
+            switch alert.alertType {
+            case .upper:
+                shouldTrigger = currentPrice >= alert.targetPrice
+            case .lower:
+                shouldTrigger = currentPrice <= alert.targetPrice
+            }
+            
+            if shouldTrigger {
+                alert.hasTriggered = true
+                highlightedStocks.insert(stock.id)
+                NotificationService.shared.sendAlertNotification(
+                    stockName: stock.name,
+                    stockCode: stock.code,
+                    alertType: alert.alertType,
+                    currentPrice: currentPrice,
+                    targetPrice: alert.targetPrice
+                )
+            }
+        }
+    }
+}
+
+class NotificationService {
+    static let shared = NotificationService()
+    
+    func requestPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
+    }
+    
+    func sendAlertNotification(stockName: String, stockCode: String, alertType: AlertType, currentPrice: Double, targetPrice: Double) {
+        let content = UNMutableNotificationContent()
+        content.title = "\(stockName) (\(stockCode))"
+        content.body = "[\(alertType.notificationKeyword)] \(stockName) 现价 \(String(format: "%.2f", currentPrice))，已达到您的目标价 \(String(format: "%.2f", targetPrice))"
+        content.sound = .default
+        
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: nil
+        )
+        UNUserNotificationCenter.current().add(request)
     }
 }
