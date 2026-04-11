@@ -326,7 +326,8 @@ class NotificationService {
     func sendAlertNotification(stockName: String, stockCode: String, alertType: AlertType, currentPrice: Double, targetPrice: Double) {
         let content = UNMutableNotificationContent()
         content.title = "\(stockName) (\(stockCode))"
-        content.body = "[\(alertType.notificationKeyword)] \(stockName) 现价 \(String(format: "%.2f", currentPrice))，已达到您的目标价 \(String(format: "%.2f", targetPrice))"
+        let bodyTemplate = String(localized: "notification.alert.body")
+        content.body = String(format: bodyTemplate, alertType.notificationKeyword, stockName, String(format: "%.2f", currentPrice), String(format: "%.2f", targetPrice))
         content.sound = .default
         
         let request = UNNotificationRequest(
