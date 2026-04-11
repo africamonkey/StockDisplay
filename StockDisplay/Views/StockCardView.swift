@@ -13,6 +13,7 @@ struct StockCardView: View {
     let name: String
     let code: String
     let loadState: StockLoadState
+    let isHighlighted: Bool = false
     
     private var colorMode: StockChangeColorMode {
         StockChangeColorMode(rawValue: stockChangeColorMode) ?? .redUpGreenDown
@@ -38,8 +39,16 @@ struct StockCardView: View {
             priceAndChangeView
         }
         .padding()
-        .background(Color.gray.opacity(0.15))
+        .background(
+            (isHighlighted ? Color.yellow.opacity(0.3) : Color.gray.opacity(0.15))
+        )
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .animation(
+            isHighlighted ?
+                Animation.easeInOut(duration: 0.5).repeatForever(autoreverses: true) :
+                .default,
+            value: isHighlighted
+        )
     }
     
     @ViewBuilder
