@@ -88,36 +88,22 @@ struct DocumentExporter: UIViewControllerRepresentable {
     let filename: String
     let onComplete: (Bool) -> Void
     
-    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+    func makeUIViewController(context: Context) -> UIActivityViewController {
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
         try? content.write(to: tempURL, atomically: true, encoding: .utf8)
         
-        let picker = UIDocumentPickerViewController(forExporting: [tempURL])
-        picker.delegate = context.coordinator
-        return picker
+        let activityVC = UIActivityViewController(
+            activityItems: [tempURL],
+            applicationActivities: nil
+        )
+        activityVC.completionWithItemsHandler = { _, completed, _, _ in
+            try? FileManager.default.removeItem(at: tempURL)
+            self.onComplete(completed)
+        }
+        return activityVC
     }
     
-    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onComplete: onComplete)
-    }
-    
-    class Coordinator: NSObject, UIDocumentPickerDelegate {
-        let onComplete: (Bool) -> Void
-        
-        init(onComplete: @escaping (Bool) -> Void) {
-            self.onComplete = onComplete
-        }
-        
-        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            onComplete(true)
-        }
-        
-        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-            onComplete(false)
-        }
-    }
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 #endif
 
@@ -139,6 +125,7 @@ struct ConfigFileSettingsView: View {
     @State private var showingDocumentPicker: Bool = false
     @State private var showingDocumentExporter: Bool = false
     @State private var exportedData: String = ""
+    @State private var shouldShowExport: Bool = false
     @StateObject private var storeKitManager = StoreKitManager()
     
     var body: some View {
@@ -148,7 +135,7 @@ struct ConfigFileSettingsView: View {
                     showingURLImportAlert = true
                 } label: {
                     HStack {
-                        Text("从URL下载")
+                        Text(String(localized: "configFile.importFromURL"))
                         Spacer()
                         if isImporting {
                             ProgressView()
@@ -187,7 +174,7 @@ struct ConfigFileSettingsView: View {
                 Button {
                     do {
                         exportedData = try buildExportJSON()
-                        showingDocumentExporter = true
+                        shouldShowExport = true
                     } catch {
                         showAlert(
                             title: String(localized: "configFile.exportError"),
@@ -198,27 +185,36 @@ struct ConfigFileSettingsView: View {
                     Text(String(localized: "configFile.exportToFile"))
                 }
                 .disabled(isExporting)
+                .onChange(of: shouldShowExport) { _, newValue in
+                    if newValue {
+                        DispatchQueue.main.async {
+                            self.showingDocumentExporter = true
+                            self.shouldShowExport = false
+                        }
+                    }
+                }
             }
         }
         .navigationTitle(String(localized: "configFile.title"))
         .alert(alertTitle, isPresented: $showingAlert) {
-            Button("OK", role: .cancel) {}
+            Button(String(localized: "common.ok"), role: .cancel) {}
         } message: {
             Text(alertMessage)
         }
-        .alert("从URL下载", isPresented: $showingURLImportAlert) {
-            Button("取消", role: .cancel) {
+        .alert(String(localized: "configFile.importFromURL"), isPresented: $showingURLImportAlert) {
+            TextField(String(localized: "configFile.urlPlaceholder"), text: $urlImportText)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+            Button(String(localized: "common.cancel"), role: .cancel) {
                 urlImportText = ""
             }
-            Button("导入") {
+            Button(String(localized: "configFile.import")) {
                 urlText = urlImportText
                 urlImportText = ""
                 importFromURL()
             }
         } message: {
-            TextField("输入URL...", text: $urlImportText)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
+            Text(String(localized: "configFile.urlPlaceholder"))
         }
         #if canImport(UIKit)
         .sheet(isPresented: $showingDocumentPicker) {
@@ -226,11 +222,12 @@ struct ConfigFileSettingsView: View {
                 importFromFile(url: url)
             }
         }
-        .sheet(isPresented: $showingDocumentExporter) {
+        .fullScreenCover(isPresented: $showingDocumentExporter) {
             DocumentExporter(
                 content: exportedData,
                 filename: "stock_config.json"
             ) { success in
+                showingDocumentExporter = false
                 if success {
                     showAlert(
                         title: String(localized: "configFile.exportSuccess"),
@@ -253,7 +250,7 @@ struct ConfigFileSettingsView: View {
                         .padding(.horizontal)
                     
                     HStack {
-                        Button("取消") {
+                        Button(String(localized: "common.cancel")) {
                             clipboardImportText = ""
                             showingClipboardImportAlert = false
                         }
@@ -261,7 +258,7 @@ struct ConfigFileSettingsView: View {
                         
                         Spacer()
                         
-                        Button("导入") {
+                        Button(String(localized: "configFile.import")) {
                             showingClipboardImportAlert = false
                             importFromClipboardText()
                         }
@@ -271,7 +268,7 @@ struct ConfigFileSettingsView: View {
                     .padding(.horizontal)
                 }
                 .padding(.top)
-                .navigationTitle("从文本框导入")
+                .navigationTitle(String(localized: "configFile.importFromTextbox"))
                 .navigationBarTitleDisplayMode(.inline)
             }
             .presentationDetents([.medium, .large])
@@ -283,7 +280,7 @@ struct ConfigFileSettingsView: View {
         guard let url = URL(string: urlText) else {
             showAlert(
                 title: String(localized: "configFile.importError"),
-                message: "Invalid URL"
+                message: String(localized: "common.invalidURL")
             )
             return
         }
@@ -320,7 +317,7 @@ struct ConfigFileSettingsView: View {
             isImporting = false
             showAlert(
                 title: String(localized: "configFile.importError"),
-                message: "Input is empty"
+                message: String(localized: "common.inputEmpty")
             )
             clipboardImportText = ""
             return
@@ -330,7 +327,7 @@ struct ConfigFileSettingsView: View {
             isImporting = false
             showAlert(
                 title: String(localized: "configFile.importError"),
-                message: "Cannot read input content"
+                message: String(localized: "common.cannotReadInput")
             )
             clipboardImportText = ""
             return
@@ -364,7 +361,7 @@ struct ConfigFileSettingsView: View {
         guard url.startAccessingSecurityScopedResource() else {
             showAlert(
                 title: String(localized: "configFile.importError"),
-                message: "Cannot access file"
+                message: String(localized: "common.cannotAccessFile")
             )
             return
         }
