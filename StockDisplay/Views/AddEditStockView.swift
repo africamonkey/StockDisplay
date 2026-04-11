@@ -243,6 +243,7 @@ private func addAlert() {
         )
         
         modelContext.insert(config)
+        try? modelContext.save()
         dismiss()
     }
 }

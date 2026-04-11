@@ -981,50 +981,18 @@
         }
       }
     },
-    "common.save" : {
+    "common.cannotAccessFile" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save"
+            "value" : "Cannot access file"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保存"
-          }
-        }
-      }
-    },
-    "common.invalidURL" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid URL"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的URL"
-          }
-        }
-      }
-    },
-    "common.inputEmpty" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Input is empty"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入为空"
+            "value" : "无法访问文件"
           }
         }
       }
@@ -1045,18 +1013,34 @@
         }
       }
     },
-    "common.cannotAccessFile" : {
+    "common.inputEmpty" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot access file"
+            "value" : "Input is empty"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法访问文件"
+            "value" : "输入为空"
+          }
+        }
+      }
+    },
+    "common.invalidURL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid URL"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无效的URL"
           }
         }
       }
@@ -1073,6 +1057,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "好"
+          }
+        }
+      }
+    },
+    "common.save" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
           }
         }
       }
@@ -1256,7 +1256,6 @@
       }
     },
     "configFile.importFromURL" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1322,7 +1321,6 @@
       }
     },
     "configFile.urlPlaceholder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1920,6 +1918,7 @@
       }
     },
     "OK" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2416,24 +2415,6 @@
           }
         }
       }
-    },
-    "从URL下载" : {
-
-    },
-    "从文本框导入" : {
-
-    },
-    "取消" : {
-
-    },
-    "导入" : {
-
-    },
-    "请输入包含配置信息的URL" : {
-
-    },
-    "输入URL..." : {
-
     }
   },
   "version" : "1.0"
