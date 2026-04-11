@@ -10,6 +10,7 @@ struct SettingsView: View {
     @State private var showingDataSourceEditor = false
     @State private var editingDataSource: DataSourceConfig?
     @AppStorage("keepScreenOn") private var keepScreenOn: Bool = false
+    @StateObject private var storeKitManager = StoreKitManager()
     
     var body: some View {
         List {
@@ -93,6 +94,21 @@ struct SettingsView: View {
                 NavigationLink(destination: ConfigFileSettingsView()) {
                     Label(String(localized: "settings.configFile"), systemImage: "doc.fill")
                 }
+            }
+            
+            Section(String(localized: "settings.premium")) {
+                NavigationLink(destination: PremiumView()) {
+                    HStack {
+                        Label(String(localized: "settings.premium"), systemImage: "crown.fill")
+                        Spacer()
+                        if storeKitManager.isPremium {
+                            Text(String(localized: "premium.unlocked"))
+                                .foregroundStyle(.green)
+                                .font(.caption)
+                        }
+                    }
+                }
+                .tint(storeKitManager.isPremium ? .green : .primary)
             }
             
             Section(String(localized: "settings.about")) {

@@ -12,6 +12,8 @@ struct AddEditStockView: View {
     
     let mode: AddEditMode
     
+    @StateObject private var storeKitManager = StoreKitManager()
+    
     @Query(sort: \DataSourceConfig.sortOrder) private var dataSources: [DataSourceConfig]
     @Query private var allAlerts: [PriceAlert]
     @State private var selectedDataSource: DataSourceConfig?
@@ -72,15 +74,17 @@ struct AddEditStockView: View {
                 
                 Section(String(localized: "addEditStock.refreshInterval")) {
                     Picker(String(localized: "addEditStock.refresh"), selection: $refreshInterval) {
-                        Text(String(localized: "addEditStock.1second")).tag(1)
-                        Text(String(localized: "addEditStock.5seconds")).tag(5)
+                        if storeKitManager.isPremium {
+                            Text(String(localized: "addEditStock.1second")).tag(1)
+                            Text(String(localized: "addEditStock.5seconds")).tag(5)
+                        }
                         Text(String(localized: "addEditStock.10seconds")).tag(10)
                         Text(String(localized: "addEditStock.30seconds")).tag(30)
                         Text(String(localized: "addEditStock.1minute")).tag(60)
                     }
                 }
                 
-                if case .edit = mode {
+                if case .edit = mode, storeKitManager.isPremium {
                     Section {
                         ForEach(stockAlerts) { alert in
                             HStack {
@@ -177,7 +181,12 @@ struct AddEditStockView: View {
     private func populateFromStock(_ stock: StockConfig) {
         name = stock.name
         code = stock.code
-        refreshInterval = stock.refreshInterval
+        
+        if !storeKitManager.isPremium && [1, 5].contains(stock.refreshInterval) {
+            refreshInterval = 10
+        } else {
+            refreshInterval = stock.refreshInterval
+        }
         
         if let dataSourceId = stock.dataSourceId {
             selectedDataSource = dataSources.first { $0.id == dataSourceId }

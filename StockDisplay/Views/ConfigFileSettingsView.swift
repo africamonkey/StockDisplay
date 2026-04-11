@@ -139,6 +139,7 @@ struct ConfigFileSettingsView: View {
     @State private var showingDocumentPicker: Bool = false
     @State private var showingDocumentExporter: Bool = false
     @State private var exportedData: String = ""
+    @StateObject private var storeKitManager = StoreKitManager()
     
     var body: some View {
         List {
@@ -423,11 +424,21 @@ struct ConfigFileSettingsView: View {
         
         for (index, importedStock) in configData.stocks.enumerated() {
             let mappedDataSourceId = importedStock.dataSourceId.flatMap { dataSourceIdMapping[$0] }
+            
+            let finalRefreshInterval: Int
+            if storeKitManager.isPremium {
+                finalRefreshInterval = importedStock.refreshInterval
+            } else {
+                finalRefreshInterval = [1, 5].contains(importedStock.refreshInterval)
+                    ? 10
+                    : importedStock.refreshInterval
+            }
+            
             let newStock = StockConfig(
                 name: importedStock.name,
                 code: importedStock.code,
                 dataSourceId: mappedDataSourceId,
-                refreshInterval: importedStock.refreshInterval,
+                refreshInterval: finalRefreshInterval,
                 sortOrder: maxStockSortOrder + index + 1
             )
             modelContext.insert(newStock)
