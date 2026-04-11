@@ -22,6 +22,7 @@ struct DashboardView: View {
     @State private var lastRefresh: [UUID: Date] = [:]
     @State private var navigationPath = NavigationPath()
     @State private var highlightedStocks: Set<UUID> = []
+    @State private var stockToConfirmDeleteAlerts: StockConfig?
     @Query private var allAlerts: [PriceAlert]
     
     var body: some View {
@@ -89,6 +90,25 @@ struct DashboardView: View {
             refreshTask?.cancel()
             startAutoRefresh()
         }
+        .confirmationDialog(
+            String(localized: "dashboard.alert.deleteConfirmTitle"),
+            isPresented: Binding(
+                get: { stockToConfirmDeleteAlerts != nil },
+                set: { if !$0 { stockToConfirmDeleteAlerts = nil } }
+            ),
+            titleVisibility: .visible
+        ) {
+            Button(String(localized: "dashboard.alert.delete")) {
+                if let stock = stockToConfirmDeleteAlerts {
+                    deleteTriggeredAlerts(for: stock)
+                }
+            }
+            Button(String(localized: "common.cancel"), role: .cancel) {
+                stockToConfirmDeleteAlerts = nil
+            }
+        } message: {
+            Text(String(localized: "dashboard.alert.deleteConfirmMessage"))
+        }
     }
     
     private var emptyState: some View {
@@ -133,7 +153,8 @@ struct DashboardView: View {
                     name: stock.name,
                     code: stock.code,
                     loadState: stockStates[stock.id] ?? .idle,
-                    isHighlighted: highlightedStocks.contains(stock.id)
+                    isHighlighted: highlightedStocks.contains(stock.id),
+                    onTap: highlightedStocks.contains(stock.id) ? { stockToConfirmDeleteAlerts = stock } : nil
                 )
             }
         }
@@ -149,7 +170,8 @@ struct DashboardView: View {
                     name: stock.name,
                     code: stock.code,
                     loadState: stockStates[stock.id] ?? .idle,
-                    isHighlighted: highlightedStocks.contains(stock.id)
+                    isHighlighted: highlightedStocks.contains(stock.id),
+                    onTap: highlightedStocks.contains(stock.id) ? { stockToConfirmDeleteAlerts = stock } : nil
                 )
             }
         }
@@ -299,6 +321,17 @@ struct DashboardView: View {
                 )
             }
         }
+    }
+    
+    private func deleteTriggeredAlerts(for stock: StockConfig) {
+        let triggeredAlerts = allAlerts.filter {
+            $0.stockId == stock.id && $0.hasTriggered
+        }
+        for alert in triggeredAlerts {
+            modelContext.delete(alert)
+        }
+        highlightedStocks.remove(stock.id)
+        stockToConfirmDeleteAlerts = nil
     }
 }
 

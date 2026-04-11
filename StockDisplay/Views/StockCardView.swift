@@ -14,12 +14,14 @@ struct StockCardView: View {
     let code: String
     let loadState: StockLoadState
     let isHighlighted: Bool
+    var onTap: (() -> Void)? = nil
     
-    init(name: String, code: String, loadState: StockLoadState, isHighlighted: Bool = false) {
+    init(name: String, code: String, loadState: StockLoadState, isHighlighted: Bool = false, onTap: (() -> Void)? = nil) {
         self.name = name
         self.code = code
         self.loadState = loadState
         self.isHighlighted = isHighlighted
+        self.onTap = onTap
     }
     
     private var colorMode: StockChangeColorMode {
@@ -56,6 +58,9 @@ struct StockCardView: View {
                 .default,
             value: isHighlighted
         )
+        .onTapGesture {
+            onTap?()
+        }
     }
     
     @ViewBuilder
