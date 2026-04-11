@@ -1,11 +1,6 @@
 import Foundation
 import SwiftData
 
-enum AlertType: String, Codable {
-    case upper
-    case lower
-}
-
 @Model
 final class PriceAlert {
     var id: UUID

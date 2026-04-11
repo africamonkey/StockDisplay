@@ -13,11 +13,15 @@ struct AddEditStockView: View {
     let mode: AddEditMode
     
     @Query(sort: \DataSourceConfig.sortOrder) private var dataSources: [DataSourceConfig]
+    @Query private var allAlerts: [PriceAlert]
     @State private var selectedDataSource: DataSourceConfig?
     @State private var showingDataSourceEditor = false
     @State private var name: String = ""
     @State private var code: String = ""
     @State private var refreshInterval: Int = 10
+    @State private var showingAddAlert = false
+    @State private var newAlertType: AlertType = .upper
+    @State private var newAlertPrice: String = ""
     
     var body: some View {
         Form {
@@ -75,6 +79,27 @@ struct AddEditStockView: View {
                         Text(String(localized: "addEditStock.1minute")).tag(60)
                     }
                 }
+                
+                Section {
+                    ForEach(stockAlerts) { alert in
+                        HStack {
+                            Text(alert.alertType.displayName)
+                                .frame(width: 80, alignment: .leading)
+                            Text(String(format: "%.2f", alert.targetPrice))
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                        }
+                    }
+                    .onDelete(perform: deleteAlerts)
+                    
+                    Button {
+                        showingAddAlert = true
+                    } label: {
+                        Label("添加提醒", systemImage: "plus.circle")
+                    }
+                } header: {
+                    Text("提醒")
+                }
             }
         }
         .navigationTitle(mode.isAdd ? String(localized: "addEditStock.title.add") : String(localized: "addEditStock.title.edit"))
@@ -89,6 +114,42 @@ struct AddEditStockView: View {
         }
         .sheet(isPresented: $showingDataSourceEditor) {
             DataSourceEditorView(dataSource: nil)
+        }
+        .sheet(isPresented: $showingAddAlert) {
+            NavigationStack {
+                Form {
+                    Section("提醒类型") {
+                        Picker("类型", selection: $newAlertType) {
+                            ForEach(AlertType.allCases, id: \.self) { type in
+                                Text(type.displayName).tag(type)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    
+                    Section("目标价格") {
+                        TextField("输入价格", text: $newAlertPrice)
+                            .keyboardType(.decimalPad)
+                    }
+                }
+                .navigationTitle("添加提醒")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("取消") {
+                            showingAddAlert = false
+                            newAlertPrice = ""
+                        }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("添加") {
+                            addAlert()
+                        }
+                        .disabled(Double(newAlertPrice) == nil)
+                    }
+                }
+            }
+            .presentationDetents([.medium])
         }
         .onChange(of: dataSources) { _, newValue in
             if selectedDataSource == nil && !newValue.isEmpty {
@@ -106,6 +167,11 @@ struct AddEditStockView: View {
         selectedDataSource != nil && !name.isEmpty && !code.isEmpty
     }
     
+    private var stockAlerts: [PriceAlert] {
+        guard case .edit(let stock) = mode else { return [] }
+        return allAlerts.filter { $0.stockId == stock.id }
+    }
+    
     private func populateFromStock(_ stock: StockConfig) {
         name = stock.name
         code = stock.code
@@ -114,6 +180,28 @@ struct AddEditStockView: View {
         if let dataSourceId = stock.dataSourceId {
             selectedDataSource = dataSources.first { $0.id == dataSourceId }
         }
+    }
+    
+    private func deleteAlerts(at offsets: IndexSet) {
+        let alertsToDelete = offsets.map { stockAlerts[$0] }
+        for alert in alertsToDelete {
+            modelContext.delete(alert)
+        }
+    }
+    
+    private func addAlert() {
+        guard case .edit(let stock) = mode,
+              let price = Double(newAlertPrice) else { return }
+        
+        let alert = PriceAlert(
+            stockId: stock.id,
+            alertType: newAlertType,
+            targetPrice: price
+        )
+        modelContext.insert(alert)
+        
+        showingAddAlert = false
+        newAlertPrice = ""
     }
     
     private func saveStock() {
