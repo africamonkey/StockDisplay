@@ -1,11 +1,11 @@
 {
   "appPolicies" : {
-    "eula" : "",
+    "eula" : "END-USER LICENSE AGREEMENT\n\nThis End-User License Agreement (\"EULA\") is a legal agreement between you and Africamonkey for the StockDisplay application and its related services.\n\nBy purchasing or using the Premium features of StockDisplay, you agree to be bound by the terms of this EULA.\n\n1. LICENSE GRANT\n Africamonkey grants you a non-exclusive, non-transferable license to use StockDisplay Premium features for your personal, non-commercial use on any Apple device you own or control.\n\n2. RESTRICTIONS\n You may not:\n - Copy, modify, or distribute the application\n - Reverse engineer, decompile, or disassemble the application\n - Rent, lease, or lend the application to any third party\n - Use the application for any commercial purpose\n\n3. PREMIUM FEATURES\n Premium features include but are not limited to:\n - 1-second stock price refresh\n - Price alert notifications\n\n4. PAYMENT AND SUBSCRIPTION\n - Premium is a one-time purchase (non-consumable)\n - Once purchased, Premium features remain available on all devices signed into the same App Store account\n - Prices are displayed in your local currency\n\n5. DISCLAIMER OF WARRANTIES\n THE APPLICATION IS PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, AFRICAMONKEY DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.\n\n6. LIMITATION OF LIABILITY\n TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL AFRICAMONKEY BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER ARISING OUT OF THE USE OF OR INABILITY TO USE THE APPLICATION.\n\n7. PRIVACY\n Your use of StockDisplay is subject to our Privacy Policy. The application does not collect personal information. Stock data is fetched directly from third-party APIs you configure.\n\n8. TERMINATION\n This EULA is effective until terminated. Your rights under this EULA will terminate automatically without notice if you fail to comply with any of its terms.\n\n9. CONTACT\n If you have any questions about this EULA, please contact us via GitHub: https://github.com/africamonkey/StockDisplay\n\nBy proceeding with the purchase, you acknowledge that you have read and understood this EULA and agree to be bound by its terms.",
     "policies" : [
       {
         "locale" : "en_US",
         "policyText" : "",
-        "policyURL" : ""
+        "policyURL" : "https://africamonkey.github.io/StockDisplay/privacy.html"
       }
     ]
   },

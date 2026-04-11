@@ -28,12 +28,8 @@ class StoreKitManager: ObservableObject {
     func loadProducts() async {
         do {
             let productIDs = [premiumProductID]
-            let products = try await Product.products(for: Set(productIDs))
-            for product in products {
-                print("Found product: \(product.id)")
-            }
+            _ = try await Product.products(for: Set(productIDs))
         } catch {
-            print("Failed to load products: \(error)")
         }
     }
     
