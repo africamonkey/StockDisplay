@@ -10,6 +10,7 @@ enum StoreKitPurchaseError: Error {
 
 class StoreKitManager: ObservableObject {
     @Published var isPremium: Bool = false
+    @Published var premiumProduct: Product?
     
     private let premiumProductID = "premium"
     
@@ -28,7 +29,8 @@ class StoreKitManager: ObservableObject {
     func loadProducts() async {
         do {
             let productIDs = [premiumProductID]
-            _ = try await Product.products(for: Set(productIDs))
+            let products = try await Product.products(for: Set(productIDs))
+            premiumProduct = products.first
         } catch {
         }
     }

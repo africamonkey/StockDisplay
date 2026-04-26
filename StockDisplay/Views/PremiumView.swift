@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 import Combine
 
 struct PremiumView: View {
@@ -69,7 +70,11 @@ struct PremiumView: View {
                                     ProgressView()
                                         .tint(.white)
                                 } else {
-                                    Text(String(localized: "premium.purchase"))
+                                    if let product = storeKitManager.premiumProduct {
+                                        Text("\(String(localized: "premium.purchase")) - \(product.displayPrice)")
+                                    } else {
+                                        Text(String(localized: "premium.purchase"))
+                                    }
                                 }
                             }
                             .frame(maxWidth: .infinity)
