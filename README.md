@@ -2,7 +2,11 @@
 
 A minimal iOS dashboard for tracking real-time stock prices with custom API support.
 
-<img width="508" height="140" alt="Image" src="https://github.com/user-attachments/assets/7990cad1-0ad7-4f79-a7c6-30406f9f6549" />
+
+
+https://github.com/user-attachments/assets/0a027b4c-d449-49bb-ae44-d115b2b8daa7
+
+
 
 <img width="550" height="412" alt="Image" src="https://github.com/user-attachments/assets/81b7eb3a-0393-46b1-96b9-53bed6422f6b" />
 <img width="248" height="538" alt="Image" src="https://github.com/user-attachments/assets/d540272c-c6ca-4433-9830-554875b138a2" />
